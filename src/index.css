@@ -1,0 +1,40 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #ff7803;
+  --color-dark-bg: #282828;
+  --color-light-bg: #fafafa;
+  --font-poppins: 'Poppins', sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+}
+
+@layer components {
+  .hoverEffect {
+    @apply transition-all duration-300 ease-in-out;
+  }
+
+  button {
+    @apply cursor-pointer;
+  }
+}
+
+/* custom scroll bar */
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #ff7803;
+  border-radius: 2px;
+}
