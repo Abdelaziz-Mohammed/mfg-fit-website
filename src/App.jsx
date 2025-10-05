@@ -4,6 +4,7 @@ import { Outlet } from "react-router-dom";
 import WhatsAppButton from "./components/whatsAppButton/WhatsAppButton";
 import { useTranslation } from "react-i18next";
 import { useEffect } from "react";
+import { Bounce, ToastContainer } from "react-toastify";
 
 function App() {
   const { i18n } = useTranslation();
@@ -19,9 +20,24 @@ function App() {
   return (
     <>
       <Navbar />
-      <Outlet />
+      <div className="mt-[72px]">
+        <Outlet />
+      </div>
       <Footer />
       <WhatsAppButton />
+      <ToastContainer
+        position={`${i18n.language === "ar" ? "top-left" : "top-right"}`}
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={true}
+        closeOnClick={false}
+        rtl={`${i18n.language === "ar" ? "true" : "false"}`}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+        transition={Bounce}
+      />
     </>
   );
 }

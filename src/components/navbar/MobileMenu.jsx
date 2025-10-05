@@ -2,7 +2,15 @@ import { useEffect, useRef } from "react";
 import { useLocation } from "react-router-dom";
 import Logo from "./../logo/Logo";
 import { IoCloseSharp } from "react-icons/io5";
-import { navItems } from "../../constants/data";
+import { FaEnvelope, FaHome, FaInfoCircle } from "react-icons/fa";
+import { FaCartShopping } from "react-icons/fa6";
+
+const navItems = [
+  { id: 1, title: "Home", path: "/", icon: <FaHome /> },
+  { id: 2, title: "Shop", path: "/shop", icon: <FaCartShopping /> },
+  { id: 3, title: "About", path: "/about", icon: <FaInfoCircle /> },
+  { id: 4, title: "Contact", path: "/contact", icon: <FaEnvelope /> },
+];
 
 function MobileMenu({ isMobileMenuOpen, setIsMobileMenuOpen }) {
   const mobileMenuRef = useRef(null);
@@ -30,9 +38,7 @@ function MobileMenu({ isMobileMenuOpen, setIsMobileMenuOpen }) {
     <div
       className={`md:hidden fixed inset-y-0 h-screen left-0 z-50 w-full bg-black/40 shadow-xl
           ${
-            isMobileMenuOpen
-              ? "translate-x-0 opacity-100"
-              : "-translate-x-full opacity-0"
+            isMobileMenuOpen ? "translate-x-0 opacity-100" : "-translate-x-full opacity-0"
           } hoverEffect`}
     >
       <div ref={mobileMenuRef} className="w-60 h-screen bg-black/85 px-6 py-10">

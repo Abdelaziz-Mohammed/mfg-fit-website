@@ -9,8 +9,8 @@ function LanguageToggler() {
       onClick={() => i18n.changeLanguage(i18n.language === "en" ? "ar" : "en")}
       className="p-2 md:px-3 hover:text-primary hoverEffect flex items-center gap-2"
     >
+      {i18n.language === "ar" ? "English" : "العربية"}
       <CiGlobe className="text-xl" />
-      {i18n.language === "ar" ? "العربية" : "English"}
     </button>
   );
 }
