@@ -1,0 +1,146 @@
+import { useState } from "react";
+import { AiOutlineClose } from "react-icons/ai";
+import { FaArrowRight } from "react-icons/fa";
+import { useAdmin } from "../../context/AdminContext";
+import FormField from "./../../components/formField/FormField";
+import { toast } from "react-toastify";
+
+function AddCategory({ onClose }) {
+  const { addCategory, loading } = useAdmin();
+
+  const [formData, setFormData] = useState({
+    name: "",
+    imageUrl: null,
+  });
+
+  const [formErrors, setFormErrors] = useState({
+    name: "",
+    imageUrl: "",
+  });
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    // basic validation
+    if (!formData.name) {
+      setFormErrors((prev) => ({
+        ...prev,
+        name: "Please enter product name",
+      }));
+      return;
+    } else {
+      setFormErrors((prev) => ({ ...prev, name: "" }));
+    }
+
+    if (!formData.imageUrl) {
+      setFormErrors((prev) => ({
+        ...prev,
+        imageUrl: "Please enter product image URL",
+      }));
+      return;
+    } else {
+      setFormErrors((prev) => ({ ...prev, imageUrl: "" }));
+    }
+
+    await addCategory(formData);
+
+    setFormData({
+      name: "",
+      imageUrl: null,
+    });
+
+    setFormErrors({
+      name: "",
+      imageUrl: "",
+    });
+
+    onClose();
+
+    toast.success("Category added successfully!");
+  };
+
+  return (
+    <div className="bg-white rounded-lg shadow-md p-6 space-y-4">
+      <div className="flex items-center justify-between">
+        <h3 className="text-xl font-bold">Add Category</h3>
+        <button onClick={onClose} className="p-2">
+          <AiOutlineClose className="text-gray-500 hover:text-gray-700 text-xl" />
+        </button>
+      </div>
+      <form onSubmit={handleSubmit} className="space-y-5">
+        {/* name */}
+        <FormField
+          label={"Category Name"}
+          type={"text"}
+          name={"name"}
+          placeholder={"New category"}
+          value={formData.name}
+          onChange={handleChange}
+          error={formErrors.name}
+        />
+        {/* imageUrl */}
+        <div className="flex flex-col gap-1">
+          <div
+            className={`h-10 flex items-center border border-neutral-200 ${
+              formData.imageUrl ? "bg-neutral-100" : ""
+            } shadow rounded overflow-hidden`}
+          >
+            <label
+              htmlFor="file-upload"
+              className="cursor-pointer text-primary/90 font-semibold flex items-center gap-1 h-full
+              hover:text-primary hover:translate-x-0 transition bg-primary/10 py-2 pr-5 pl-7 -translate-x-3"
+            >
+              <span className="text-sm">Choose Category Image</span>
+              <FaArrowRight className="pt-1 text-xl" />
+            </label>
+            <input
+              id="file-upload"
+              type="file"
+              accept="image/*"
+              onChange={(e) => setFormData({ ...formData, imageUrl: e.target.files[0] })}
+              className="hidden"
+            />
+            {formData.imageUrl && (
+              <span
+                className="text-sm text-neutral-700 truncate bg-neutral-100
+              text-center py-3 font-medium flex-1"
+              >
+                {formData.imageUrl.name}
+              </span>
+            )}
+          </div>
+          {formErrors.imageUrl.length > 0 && (
+            <p className="text-[13px] text-red-500">
+              {"* "} {formErrors.imageUrl}
+            </p>
+          )}
+        </div>
+        <div className="grid grid-cols-2 gap-4">
+          {/* add category btn */}
+          <button
+            type="submit"
+            disabled={loading}
+            className="bg-primary text-white py-2 rounded-md hover:bg-primary/80 hoverEffect"
+          >
+            {loading ? "Adding..." : "Add Category"}
+          </button>
+          {/* cancel btn */}
+          <button
+            type="button"
+            disabled={loading}
+            className="bg-red-500 text-white py-2 rounded-md hover:bg-red-400 hoverEffect"
+            onClick={onClose}
+          >
+            Cancel
+          </button>
+        </div>
+      </form>
+    </div>
+  );
+}
+
+export default AddCategory;

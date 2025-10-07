@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { AiOutlineClose } from "react-icons/ai";
 import { FaArrowRight } from "react-icons/fa";
 import { useAdmin } from "../../context/AdminContext";
@@ -7,10 +7,6 @@ import { toast } from "react-toastify";
 
 function UpdateProduct({ onClose, product }) {
   const { updateProduct, loading } = useAdmin();
-
-  useEffect(() => {
-    console.log(product);
-  }, [product]);
 
   const [formData, setFormData] = useState({
     name: product.name || "",
@@ -334,13 +330,13 @@ function UpdateProduct({ onClose, product }) {
           error={formErrors.rank}
         />
         <div className="grid grid-cols-2 gap-4">
-          {/* add product btn */}
+          {/* update product btn */}
           <button
             type="submit"
             disabled={loading}
             className="bg-primary text-white py-2 rounded-md hover:bg-primary/80 hoverEffect"
           >
-            {loading ? "Adding..." : "Add Product"}
+            {loading ? "Updating..." : "Update Product"}
           </button>
           {/* cancel btn */}
           <button
