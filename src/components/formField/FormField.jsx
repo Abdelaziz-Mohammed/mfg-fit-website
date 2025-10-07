@@ -31,6 +31,7 @@ const FormField = ({ label, type, name, placeholder, value, onChange, error }) =
         className="w-full outline-0 border border-gray-300 focus:border-gray-500 rounded-md p-2 placeholder:text-sm"
         value={value}
         onChange={onChange}
+        min={0}
       />
       {error && <p className="text-red-500 text-xs">* {error}</p>}
     </div>

@@ -97,40 +97,37 @@ function Contact() {
       message: formData.message,
     });
 
-    if (response?.success) {
+    if (response?.status === "success") {
       setSuccessMessage("Message sent successfully!");
+      toast.success(response?.message || "Message sent successfully!", { autoClose: 3000 });
       setErrorMessage("");
+      setFormData({
+        firstName: "",
+        lastName: "",
+        email: "",
+        subject: "",
+        message: "",
+      });
+      setFormErrors({
+        firstName: "",
+        lastName: "",
+        email: "",
+        subject: "",
+        message: "",
+      });
     }
 
     if (error) {
       setErrorMessage(error);
       setSuccessMessage("");
-      toast.error(error);
     }
-
-    setFormData({
-      firstName: "",
-      lastName: "",
-      email: "",
-      subject: "",
-      message: "",
-    });
-    setFormErrors({
-      firstName: "",
-      lastName: "",
-      email: "",
-      subject: "",
-      message: "",
-    });
   };
 
   return (
     <div className="bg-white">
       <div className="container mx-auto px-4">
         <div className="mt-28 mb-12 py-8 bg-gray-50 rounded-lg max-w-3xl mx-auto px-6 shadow-xl">
-          <h2 className="text-center text-2xl sm:text-3xl font-bold mb-8 uppercase">
-            Get in Touch
-          </h2>
+          <h2 className="text-center text-2xl sm:text-3xl font-bold mb-8 uppercase">Get in Touch</h2>
           <form onSubmit={handleSubmit} className="space-y-8">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
               {/* First Name */}

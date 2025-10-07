@@ -1,25 +1,26 @@
 import { Bounce, toast, ToastContainer } from "react-toastify";
-import { useAuth } from "../context/AuthContext";
 import i18n from "./../utils/i18n";
 import { useEffect } from "react";
+import Sidebar from "./Sidebar";
+import Navbar from "./Navbar";
+import { Outlet } from "react-router-dom";
 
 function Dashboard() {
-  const { logout } = useAuth();
-
   useEffect(() => {
     document.title = "Dashboard - MFG Fit";
-    toast.info("Welcome to the Dashboard!", { autoClose: 2000 });
   }, []);
 
   return (
     <>
-      <div>
+      <div className="flex min-h-screen max-h-screen">
         <div>
-          <h1>Dashboard</h1>
-          <button onClick={logout}>Logout</button>
-          <button className="" onClick={() => toast.success("This is a toast message!")}>
-            Toast
-          </button>
+          <Sidebar />
+        </div>
+        <div className="flex flex-col gap-0 flex-1">
+          <Navbar />
+          <div className="overflow-y-auto h-[calc(100vh-50px)] mx-2 my-3 p-2 border border-neutral-200 rounded-md">
+            <Outlet />
+          </div>
         </div>
       </div>
       <ToastContainer
