@@ -117,16 +117,6 @@ function Login() {
           </form>
           {/* login error */}
           {loginError && <p className="text-red-500 mt-6 text-[13px]">* {loginError}</p>}
-          {/* forgot password link */}
-          <div className="mt-6 flex items-center justify-start overflow-hidden">
-            <Link
-              to="/forgot-password"
-              className="text-primary/95 font-medium cursor-pointer flex items-center gap-2 -translate-x-6
-              hover:text-primary text-[13px] hover:translate-x-0 hoverEffect"
-            >
-              <FaLongArrowAltRight className="text-lg" /> Forgot Your Password ? <b>Let's Reset</b>
-            </Link>
-          </div>
         </div>
       </div>
       <ToastContainer

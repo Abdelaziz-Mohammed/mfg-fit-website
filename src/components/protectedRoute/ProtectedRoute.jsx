@@ -1,7 +1,7 @@
 import { Navigate, useLocation } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import Loading from "../loading/Loading";
-import jwtDecode from "jwt-decode";
+import { jwtDecode } from "jwt-decode";
 import { useEffect } from "react";
 import { toast } from "react-toastify";
 
