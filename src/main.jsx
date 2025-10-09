@@ -19,8 +19,6 @@ axios.interceptors.response.use(
       localStorage.removeItem("user");
 
       delete axios.defaults.headers.common["Authorization"];
-
-      window.location.href = "/login";
     }
 
     return Promise.reject(error);
