@@ -1,13 +1,13 @@
 import { AiOutlineClose } from "react-icons/ai";
 import { useAdmin } from "../../context/AdminContext";
 
-function DeleteCoupon({ onClose, couponId }) {
-  const { deleteCoupon, loading } = useAdmin();
+function DeleteProvince({ onClose, provinceId }) {
+  const { deleteProvince, loading } = useAdmin();
 
-  const handleDelete = async (couponId) => {
-    console.log(couponId);
+  const handleDelete = async (provinceId) => {
+    console.log(provinceId);
 
-    await deleteCoupon(couponId);
+    await deleteProvince(provinceId);
 
     onClose();
   };
@@ -15,10 +15,10 @@ function DeleteCoupon({ onClose, couponId }) {
   return (
     <div className="relative bg-white pt-20 pb-10 px-6 rounded-md shadow-lg w-96 max-w-full">
       <div className="flex flex-col gap-12">
-        <h2 className="text-lg font-semibold text-center">Are you sure you want to delete this coupon?</h2>
+        <h2 className="text-lg font-semibold text-center">Are you sure you want to delete this province?</h2>
         <div className="grid grid-cols-2 gap-4">
           <button
-            onClick={() => handleDelete(couponId)}
+            onClick={() => handleDelete(provinceId)}
             disabled={loading}
             className="bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700 mr-4"
           >
@@ -36,4 +36,4 @@ function DeleteCoupon({ onClose, couponId }) {
   );
 }
 
-export default DeleteCoupon;
+export default DeleteProvince;

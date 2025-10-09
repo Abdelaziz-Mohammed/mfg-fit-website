@@ -3,11 +3,10 @@ import { AiOutlineClose } from "react-icons/ai";
 import { FaArrowRight } from "react-icons/fa";
 import { useAdmin } from "../../context/AdminContext";
 import FormField from "./../../components/formField/FormField";
-import { toast } from "react-toastify";
 
 function AddCoupon({ onClose }) {
   const { createCouponForProduct, products, loading } = useAdmin();
-  const [productId, setProductId] = useState(0);
+  const [productId, setProductId] = useState(-1);
 
   const [formData, setFormData] = useState({
     code: "",
@@ -19,6 +18,7 @@ function AddCoupon({ onClose }) {
     code: "",
     discount: "",
     validTo: "",
+    productId: "",
   });
 
   const handleChange = (e) => {
@@ -65,7 +65,14 @@ function AddCoupon({ onClose }) {
       setFormErrors((prev) => ({ ...prev, validTo: "" }));
     }
 
-    await createCouponForProduct(formData, productId);
+    if (productId === -1) {
+      setFormErrors((prev) => ({ ...prev, productId: "Please select a product for the coupon" }));
+      return;
+    } else {
+      setFormErrors((prev) => ({ ...prev, productId: "" }));
+    }
+
+    await createCouponForProduct({ ...formData, discount: parseFloat(formData.discount) }, productId);
 
     setFormData({
       code: "",
@@ -80,8 +87,6 @@ function AddCoupon({ onClose }) {
     });
 
     onClose();
-
-    toast.success("Coupon added successfully!");
   };
 
   return (
@@ -124,13 +129,13 @@ function AddCoupon({ onClose }) {
           error={formErrors.validTo}
         />
         {/* select product */}
-        <div>
+        <div className="flex flex-col gap-1">
           <label className="block mb-1 font-medium">Select Product</label>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 cursor-pointer">
             <select
               value={productId}
               onChange={(e) => setProductId(e.target.value)}
-              className="border border-neutral-300 rounded-md p-2"
+              className="border border-neutral-300 rounded-md p-2 w-full hover:border-neutral-400 cursor-pointer outline-0"
             >
               <option value="">Select a product</option>
               {products.map((product) => (
@@ -140,6 +145,7 @@ function AddCoupon({ onClose }) {
               ))}
             </select>
           </div>
+          {formErrors.productId && <p className="text-red-500 text-xs">* {formErrors.productId}</p>}
         </div>
         <div className="grid grid-cols-2 gap-4">
           <button

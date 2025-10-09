@@ -59,8 +59,6 @@ function AddCategory({ onClose }) {
     });
 
     onClose();
-
-    toast.success("Category added successfully!");
   };
 
   return (

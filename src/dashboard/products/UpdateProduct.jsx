@@ -3,7 +3,6 @@ import { AiOutlineClose } from "react-icons/ai";
 import { FaArrowRight } from "react-icons/fa";
 import { useAdmin } from "../../context/AdminContext";
 import FormField from "./../../components/formField/FormField";
-import { toast } from "react-toastify";
 
 function UpdateProduct({ onClose, product }) {
   const { updateProduct, loading } = useAdmin();
@@ -189,8 +188,6 @@ function UpdateProduct({ onClose, product }) {
     });
 
     onClose();
-
-    toast.success("Product updated successfully!");
   };
 
   return (

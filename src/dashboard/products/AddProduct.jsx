@@ -189,8 +189,6 @@ function AddProduct({ onClose }) {
     });
 
     onClose();
-
-    toast.success("Product added successfully!");
   };
 
   return (

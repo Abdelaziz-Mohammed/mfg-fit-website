@@ -1,5 +1,6 @@
 import axios from "axios";
 import { createContext, useContext, useEffect, useState } from "react";
+import { toast } from "react-toastify";
 
 const AdminContext = createContext(null);
 
@@ -44,6 +45,9 @@ export const AdminProvider = ({ children }) => {
           Authorization: `Bearer ${token}`,
         },
       });
+
+      fetchProducts();
+      toast.success("Product added successfully!");
     } catch (err) {
       setError(err.response?.data?.message || "Error adding product");
       // logging to be removed
@@ -77,6 +81,7 @@ export const AdminProvider = ({ children }) => {
 
     try {
       const token = JSON.parse(localStorage.getItem("user"))?.token;
+
       const formData = new FormData();
 
       for (const key in updatedData) {
@@ -93,6 +98,9 @@ export const AdminProvider = ({ children }) => {
           Authorization: `Bearer ${token}`,
         },
       });
+
+      fetchProducts();
+      toast.success("Product updated successfully!");
     } catch (err) {
       setError(err.response?.data?.message || "Error updating product");
       // logging to be removed
@@ -109,11 +117,15 @@ export const AdminProvider = ({ children }) => {
 
     try {
       const token = JSON.parse(localStorage.getItem("user"))?.token;
+
       await axios.delete(`/api/products/${productId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
+
+      fetchProducts();
+      toast.success("Product deleted successfully!");
     } catch (err) {
       setError(err.response?.data?.message || "Error deleting product");
       // logging to be removed
@@ -147,6 +159,9 @@ export const AdminProvider = ({ children }) => {
           Authorization: `Bearer ${token}`,
         },
       });
+
+      fetchCategories();
+      toast.success("Category added successfully!");
     } catch (err) {
       setError(err.response?.data?.message || "Error adding category");
       // logging to be removed
@@ -179,11 +194,15 @@ export const AdminProvider = ({ children }) => {
     setError("");
     try {
       const token = JSON.parse(localStorage.getItem("user"))?.token;
+
       await axios.put(`/api/categories/${categoryId}`, updatedData, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
+
+      fetchCategories();
+      toast.success("Category updated successfully!");
     } catch (err) {
       setError(err.response?.data?.message || "Error updating category");
       // logging to be removed
@@ -200,11 +219,15 @@ export const AdminProvider = ({ children }) => {
 
     try {
       const token = JSON.parse(localStorage.getItem("user"))?.token;
+
       await axios.delete(`/api/categories/${categoryId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
+
+      fetchCategories();
+      toast.success("Category deleted successfully!");
     } catch (err) {
       setError(err.response?.data?.message || "Error deleting category");
       // logging to be removed
@@ -223,13 +246,20 @@ export const AdminProvider = ({ children }) => {
 
     try {
       const token = JSON.parse(localStorage.getItem("user"))?.token;
+
       await axios.post(`/api/coupons/${productId}/products`, couponData, {
         headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
       });
+
+      fetchCoupons();
+      toast.success("Coupon added successfully!");
     } catch (err) {
       setError(err.response?.data?.message || "Error adding coupon");
+      toast.error(err.response?.data?.message || "Error adding coupon");
       // logging to be removed
       console.log(err);
     } finally {
@@ -249,7 +279,11 @@ export const AdminProvider = ({ children }) => {
           Authorization: `Bearer ${token}`,
         },
       });
-      setCoupons(res.data.data);
+
+      setCoupons(res.data.data.coupons);
+
+      // logging to be removed
+      console.log(res.data.data.coupons);
     } catch (err) {
       setError(err.response?.data?.message || "Error fetching coupons");
       // logging to be removed
@@ -266,15 +300,20 @@ export const AdminProvider = ({ children }) => {
 
     try {
       const token = JSON.parse(localStorage.getItem("user"))?.token;
+
       await axios.delete(`/api/coupons/${couponId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
+
+      fetchCoupons();
+      toast.success("Coupon deleted successfully!");
     } catch (err) {
       setError(err.response?.data?.message || "Error deleting coupon");
       // logging to be removed
       console.log(err);
+      toast.error(err.response?.data?.message || "Error deleting coupon");
     } finally {
       setLoading(false);
       setTimeout(() => setError(""), 8000);
@@ -289,6 +328,9 @@ export const AdminProvider = ({ children }) => {
 
     try {
       await axios.post(`/api/orders/provinces/${provinceId}`, orderData);
+
+      fetchOrders();
+      toast.success("Order created successfully!");
     } catch (err) {
       setError(err.response?.data?.message || "Error creating order");
       // logging to be removed
@@ -306,6 +348,8 @@ export const AdminProvider = ({ children }) => {
     try {
       const res = await axios.get("/api/orders");
       setOrders(res.data.data);
+      // logging to be removed
+      console.log(res.data.data);
     } catch (err) {
       setError(err.response?.data?.message || "Error fetching orders");
       // logging to be removed
@@ -322,6 +366,7 @@ export const AdminProvider = ({ children }) => {
 
     try {
       const token = JSON.parse(localStorage.getItem("user"))?.token;
+
       await axios.patch(
         `/api/orders/${orderId}/status`,
         { status: newStatus },
@@ -331,6 +376,9 @@ export const AdminProvider = ({ children }) => {
           },
         }
       );
+
+      fetchOrders();
+      toast.success("Order status updated successfully!");
     } catch (err) {
       setError(err.response?.data?.message || "Error updating order status");
       // logging to be removed
@@ -349,11 +397,15 @@ export const AdminProvider = ({ children }) => {
 
     try {
       const token = JSON.parse(localStorage.getItem("user"))?.token;
+
       await axios.post("/api/provinces", provinceData, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
+
+      fetchProvinces();
+      toast.success("Province added successfully!");
     } catch (err) {
       setError(err.response?.data?.message || "Error adding province");
       // logging to be removed
@@ -371,6 +423,7 @@ export const AdminProvider = ({ children }) => {
     try {
       const res = await axios.get("/api/provinces");
       setProvinces(res.data.data);
+      console.log(res);
     } catch (err) {
       setError(err.response?.data?.message || "Error fetching provinces");
       // logging to be removed
@@ -387,11 +440,15 @@ export const AdminProvider = ({ children }) => {
 
     try {
       const token = JSON.parse(localStorage.getItem("user"))?.token;
+
       await axios.put(`/api/provinces/${provinceId}`, updatedData, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
+
+      fetchProvinces();
+      toast.success("Province updated successfully!");
     } catch (err) {
       setError(err.response?.data?.message || "Error updating province");
       // logging to be removed
@@ -408,11 +465,15 @@ export const AdminProvider = ({ children }) => {
 
     try {
       const token = JSON.parse(localStorage.getItem("user"))?.token;
+
       await axios.delete(`/api/provinces/${provinceId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
+
+      fetchProvinces();
+      toast.success("Province deleted successfully!");
     } catch (err) {
       setError(err.response?.data?.message || "Error deleting province");
       // logging to be removed
