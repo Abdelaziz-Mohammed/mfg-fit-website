@@ -2,9 +2,11 @@ import { useState } from "react";
 import FormField from "./../../components/formField/FormField";
 import { useContact } from "../../context/ContactContext";
 import { toast } from "react-toastify";
+import { useTranslation } from "react-i18next";
 
 function Contact() {
   const { loading, error, sendMessage } = useContact();
+  const { t } = useTranslation();
 
   const [formData, setFormData] = useState({
     firstName: "",
@@ -14,93 +16,56 @@ function Contact() {
     message: "",
   });
 
-  const [formErrors, setFormErrors] = useState({
-    firstName: "",
-    lastName: "",
-    email: "",
-    subject: "",
-    message: "",
-  });
-
-  const [successMessage, setSuccessMessage] = useState("");
-  const [errorMessage, setErrorMessage] = useState("");
+  const [formErrors, setFormErrors] = useState({});
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
+    setFormErrors({ ...formErrors, [name]: "" });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    const newErrors = {};
+
     // basic validation
     if (!formData.firstName) {
-      setFormErrors((prev) => ({
-        ...prev,
-        firstName: "Please enter your first name",
-      }));
-      return;
-    } else {
-      setFormErrors((prev) => ({ ...prev, firstName: "" }));
+      newErrors.firstName = t("contact.form.firstName.errors.required");
     }
 
     if (!formData.lastName) {
-      setFormErrors((prev) => ({
-        ...prev,
-        lastName: "Please enter your last name",
-      }));
-      return;
-    } else {
-      setFormErrors((prev) => ({ ...prev, lastName: "" }));
+      newErrors.lastName = t("contact.form.lastName.errors.required");
     }
 
     if (!formData.email) {
-      setFormErrors((prev) => ({
-        ...prev,
-        email: "Please enter your email",
-      }));
-      return;
+      newErrors.email = t("contact.form.email.errors.required");
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
-      setFormErrors((prev) => ({
-        ...prev,
-        email: "Invalid email, Please enter a valid email",
-      }));
-      return;
-    } else {
-      setFormErrors((prev) => ({ ...prev, email: "" }));
+      newErrors.email = t("contact.form.email.errors.invalid");
     }
 
     if (!formData.subject) {
-      setFormErrors((prev) => ({
-        ...prev,
-        subject: "Please enter the subject",
-      }));
-      return;
-    } else {
-      setFormErrors((prev) => ({ ...prev, subject: "" }));
+      newErrors.subject = t("contact.form.subject.errors.required");
     }
 
     if (!formData.message) {
-      setFormErrors((prev) => ({
-        ...prev,
-        message: "Please enter your message",
-      }));
+      newErrors.message = t("contact.form.message.errors.required");
+    }
+
+    if (Object.keys(newErrors).length > 0) {
+      setFormErrors(newErrors);
       return;
-    } else {
-      setFormErrors((prev) => ({ ...prev, message: "" }));
     }
 
     const response = await sendMessage({
-      userName: formData.firstName + " " + formData.lastName,
+      userName: `${formData.firstName} ${formData.lastName}`,
       userEmail: formData.email,
       subject: formData.subject,
       message: formData.message,
     });
 
     if (response?.status === "success") {
-      setSuccessMessage("Message sent successfully!");
       toast.success(response?.message || "Message sent successfully!", { autoClose: 3000 });
-      setErrorMessage("");
       setFormData({
         firstName: "",
         lastName: "",
@@ -108,18 +73,9 @@ function Contact() {
         subject: "",
         message: "",
       });
-      setFormErrors({
-        firstName: "",
-        lastName: "",
-        email: "",
-        subject: "",
-        message: "",
-      });
-    }
-
-    if (error) {
-      setErrorMessage(error);
-      setSuccessMessage("");
+      setFormErrors({});
+    } else if (error) {
+      toast.error(error, { autoClose: 3000 });
     }
   };
 
@@ -127,25 +83,27 @@ function Contact() {
     <div className="bg-white">
       <div className="container mx-auto px-4">
         <div className="mt-28 mb-12 py-8 bg-gray-50 rounded-lg max-w-3xl mx-auto px-6 shadow-xl">
-          <h2 className="text-center text-2xl sm:text-3xl font-bold mb-8 uppercase">Get in Touch</h2>
+          <h2 className="text-center text-primary text-2xl sm:text-3xl font-bold mb-8 uppercase">
+            {t("contact.title")}
+          </h2>
           <form onSubmit={handleSubmit} className="space-y-8">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
               {/* First Name */}
               <FormField
-                label={"First Name"}
+                label={t("contact.form.firstName.label")}
                 type={"text"}
                 name={"firstName"}
-                placeholder={"John"}
+                placeholder={t("contact.form.firstName.placeholder")}
                 value={formData.firstName}
                 onChange={handleChange}
                 error={formErrors.firstName}
               />
               {/* Last Name */}
               <FormField
-                label={"Last Name"}
+                label={t("contact.form.lastName.label")}
                 type={"text"}
                 name={"lastName"}
-                placeholder={"Doe"}
+                placeholder={t("contact.form.lastName.placeholder")}
                 value={formData.lastName}
                 onChange={handleChange}
                 error={formErrors.lastName}
@@ -153,30 +111,30 @@ function Contact() {
             </div>
             {/* Email */}
             <FormField
-              label={"Email"}
+              label={t("contact.form.email.label")}
               type={"email"}
               name={"email"}
-              placeholder={"john.doe@example.com"}
+              placeholder={t("contact.form.email.placeholder")}
               value={formData.email}
               onChange={handleChange}
               error={formErrors.email}
             />
             {/* Subject */}
             <FormField
-              label={"Subject"}
+              label={t("contact.form.subject.label")}
               type={"text"}
               name={"subject"}
-              placeholder={"Subject"}
+              placeholder={t("contact.form.subject.placeholder")}
               value={formData.subject}
               onChange={handleChange}
               error={formErrors.subject}
             />
             {/* Message */}
             <FormField
-              label={"Message"}
+              label={t("contact.form.message.label")}
               type={"textarea"}
               name={"message"}
-              placeholder={"Your message..."}
+              placeholder={t("contact.form.message.placeholder")}
               value={formData.message}
               onChange={handleChange}
               error={formErrors.message}
@@ -187,7 +145,7 @@ function Contact() {
               className="w-full text-white bg-primary/95 hover:bg-primary py-2 rounded-md"
               disabled={loading}
             >
-              {loading ? "Sending message..." : "Send Message"}
+              {loading ? <span>{t("contact.form.submitButton.loading")}</span> : t("contact.form.submitButton.label")}
             </button>
           </form>
         </div>

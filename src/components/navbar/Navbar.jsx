@@ -7,17 +7,19 @@ import { IoCloseSharp } from "react-icons/io5";
 import { AiOutlineMenu } from "react-icons/ai";
 import { FaEnvelope, FaHome, FaInfoCircle } from "react-icons/fa";
 import LanguageToggler from "../languageToggler/LanguageToggler";
-
-const navItems = [
-  { id: 1, title: "Home", path: "/", icon: <FaHome /> },
-  { id: 2, title: "Shop", path: "/shop", icon: <FaCartShopping /> },
-  { id: 3, title: "About", path: "/about", icon: <FaInfoCircle /> },
-  { id: 4, title: "Contact", path: "/contact", icon: <FaEnvelope /> },
-];
+import { useTranslation } from "react-i18next";
 
 function Navbar() {
   const { pathname } = useLocation();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const { t } = useTranslation();
+
+  const navItems = [
+    { id: 1, title: t("header.navItems.home"), path: "/", icon: <FaHome /> },
+    { id: 2, title: t("header.navItems.shop"), path: "/shop", icon: <FaCartShopping /> },
+    { id: 3, title: t("header.navItems.about"), path: "/about", icon: <FaInfoCircle /> },
+    { id: 4, title: t("header.navItems.contact"), path: "/contact", icon: <FaEnvelope /> },
+  ];
 
   return (
     <header className="bg-dark-bg text-white shadow-md py-4 fixed top-0 left-0 w-full z-50">
@@ -28,13 +30,15 @@ function Navbar() {
               <li key={item.id} className="relative group">
                 <Link
                   to={item.path}
-                  className={`${pathname === item.path ? "text-primary" : "text-white"}`}
+                  className={`hover:text-primary rtl:text-base ${
+                    pathname === item.path ? "text-primary" : "text-white"
+                  }`}
                 >
                   {item.title}
                 </Link>
                 <span
-                  className={`absolute left-0 bottom-0 w-0 h-[0.2px] group-hover:w-full hoverEffect
-                  ${pathname === item.path ? "bg-primary w-full" : "bg-white"}`}
+                  className={`absolute left-0 rtl:right-0 bottom-0 w-0 h-[0.2px] group-hover:w-full hoverEffect
+                  group-hover:bg-primary ${pathname === item.path ? "bg-primary w-full" : "bg-white"}`}
                 ></span>
               </li>
             ))}
@@ -48,10 +52,7 @@ function Navbar() {
           )}
         </button>
         <div className="md:hidden">
-          <MobileMenu
-            isMobileMenuOpen={isMobileMenuOpen}
-            setIsMobileMenuOpen={setIsMobileMenuOpen}
-          />
+          <MobileMenu isMobileMenuOpen={isMobileMenuOpen} setIsMobileMenuOpen={setIsMobileMenuOpen} />
         </div>
         <div className="flex-1 flex items-center justify-center">
           <Logo />

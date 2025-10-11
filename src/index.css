@@ -15,6 +15,10 @@ body {
   font-family: 'Poppins', sans-serif;
 }
 
+body[dir="rtl"] {
+  font-family: 'Noto Sans Arabic', sans-serif;
+}
+
 @layer components {
   .hoverEffect {
     @apply transition-all duration-300 ease-in-out;

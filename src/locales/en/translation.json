@@ -1,5 +1,106 @@
 {
-  "welcome": "Welcome",
-  "login": "Login",
-  "logout": "Logout"
+  "header": {
+    "navItems": {
+      "home": "Home",
+      "shop": "Shop",
+      "about": "About",
+      "contact": "Contact"
+    }
+  },
+  "banner": {
+    "welcome": "Welcome to MFG",
+    "slogan": {
+      "line1": "From Dumbbells to Apparel,",
+      "line2": "We’ve Got All Your Fitness Needs Covered!"
+    },
+    "buttons": {
+      "discoverClothing": "Discover Clothing",
+      "discoverEquipment": "Discover Equipment",
+      "customOrder": "Custom Order"
+    }
+  },
+  "about": {
+    "title": "About Us",
+    "paragraphs": {
+      "p1": "MFG – short for Mohamed Farag Group – is the result of a dream born out of ambition, which, with God's will and hard work, turned into a shining reality of achievement.",
+      "p2": "The story began in 2024, when the idea was nothing more than a fleeting thought — but one that carried within it the seed of determination and faith that success is never by chance, but built through steady steps, continuous effort, and a clear vision for the future.",
+      "p3": "At first, our work focused on a single product — the foundation stone of a promising journey. Over time, thanks to God and the team’s dedication and passion, the idea grew, and our ambitions expanded until today MFG stands as a fully integrated entity striving for excellence, with quality and innovation at the heart of everything we do.",
+      "p4": "Today, we take pride in specializing in the manufacturing and setup of Calisthenics playgrounds and all related equipment — committed to providing products that combine durability, elegance, and precision in design, offering athletes and communities an ideal environment that blends challenge, strength, and inspiration.",
+      "p5": "At MFG, we believe that true success is not measured only by achievements, but by the positive impact we leave on others’ lives. That’s why we continue to work with a vision toward the future — where MFG, God willing, becomes a symbol of quality, innovation, and leadership in the world of Calisthenics playground manufacturing and equipment."
+    }
+  },
+  "contact": {
+    "title": "Get in Touch",
+    "form": {
+      "firstName": {
+        "label": "First Name",
+        "placeholder": "John",
+        "errors": {
+          "required": "Please enter your first name"
+        }
+      },
+      "lastName": {
+        "label": "Last Name",
+        "placeholder": "Doe",
+        "errors": {
+          "required": "Please enter your last name"
+        }
+      },
+      "email": {
+        "label": "Email",
+        "placeholder": "johndoe@example.com",
+        "errors": {
+          "required": "Please enter your email",
+          "invalid": "Invalid email address"
+        }
+      },
+      "subject": {
+        "label": "Subject",
+        "placeholder": "Subject here",
+        "errors": {
+          "required": "Please enter the subject"
+        }
+      },
+      "message": {
+        "label": "Message",
+        "placeholder": "Type your message here",
+        "errors": {
+          "required": "Please enter your message"
+        }
+      },
+      "submitButton": {
+        "label": "Send Message",
+        "loading": "Sending..."
+      }
+    }
+  },
+  "footer": {
+    "quickLinks": {
+      "title": "Quick Links"
+    },
+    "socialMedia": {
+      "facebook": "Facebook",
+      "instagram": "Instagram",
+      "twitter": "Twitter"
+    },
+    "contactUs": {
+      "title": "Contact Us",
+      "address": {
+        "type": "Address",
+        "value": "123 St, City, Country"
+      },
+      "phone": {
+        "type": "Phone",
+        "value": "+20 123 456 7890"
+      },
+      "email": {
+        "type": "Email",
+        "value": "info@mfgfit.com"
+      }
+    },
+    "copyright": {
+      "year": "2025",
+      "text": "All rights reserved"
+    }
+  }
 }
