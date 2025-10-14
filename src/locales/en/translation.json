@@ -1,4 +1,10 @@
 {
+  "general": {
+    "login": "Login",
+    "logout": "Logout",
+    "loginWelcome": "Welcome back to",
+    "loginLoading": "Logging in..."
+  },
   "header": {
     "navItems": {
       "home": "Home",
@@ -81,7 +87,8 @@
     "socialMedia": {
       "facebook": "Facebook",
       "instagram": "Instagram",
-      "twitter": "Twitter"
+      "tiktok": "TikTok",
+      "youtube": "YouTube"
     },
     "contactUs": {
       "title": "Contact Us",
@@ -101,6 +108,200 @@
     "copyright": {
       "year": "2025",
       "text": "All rights reserved"
+    }
+  },
+  "dashboard": {
+    "welcome": "Welcome to Dashboard",
+    "slogan": "Your own space where you can manage everything.",
+    "navItems": {
+      "dashboard": "Dashboard",
+      "products": "Products",
+      "categories": "Categories",
+      "coupons": "Coupons",
+      "orders": "Orders",
+      "provinces": "Provinces",
+      "settings": "Settings"
+    },
+    "products": {
+      "addProduct": "Add Product",
+      "updateProduct": "Update Product",
+      "addProductLoading": "Adding Product...",
+      "updateProductLoading": "Updating Product...",
+      "cancel": "Cancel",
+      "update": "Update",
+      "delete": "Delete",
+      "deleteLoading": "Deleting...",
+      "deleteMessage": "Are you sure you want to delete this product?",
+      "noProductImage": "No Image Available",
+      "noProducts": "No products available.",
+      "noProductsDescription": "Go ahead and hit the add product button to add new products.",
+      "searchProducts": "Search Products...",
+      "price": "Price",
+      "currency": "EGP",
+      "discount": "Discount",
+      "weight": "Weight",
+      "weightUnit": "kg",
+      "stock": "Stock",
+      "rank": "Rank",
+      "color": "Color",
+      "category": "Category",
+      "manufacturer": "Manufacturer",
+      "forms": {
+        "productNameEn": {
+          "label": "Product Name (En)",
+          "placeholder": "New product",
+          "errors": {
+            "required": "Please enter product name in English"
+          }
+        },
+        "productNameAr": {
+          "label": "Product Name (Ar)",
+          "placeholder": "Ex: تي شيرت",
+          "errors": {
+            "required": "Please enter product name in Arabic"
+          }
+        },
+        "productName": {
+          "label": "Product Name",
+          "placeholder": "New product",
+          "errors": {
+            "required": "Please enter product name"
+          }
+        },
+        "productDescriptionEn": {
+          "label": "Product Description (En)",
+          "placeholder": "Ex: This is a new product",
+          "errors": {
+            "required": "Please enter product description in English"
+          }
+        },
+        "productDescriptionAr": {
+          "label": "Product Description (Ar)",
+          "placeholder": "Ex: هذا منتج جديد",
+          "errors": {
+            "required": "Please enter product description in Arabic"
+          }
+        },
+        "productDescription": {
+          "label": "Product Description",
+          "placeholder": "Ex: This is a new product",
+          "errors": {
+            "required": "Please enter product description"
+          }
+        },
+        "productPrice": {
+          "label": "Product Price",
+          "placeholder": "100",
+          "errors": {
+            "required": "Please enter product price",
+            "invalid": "Please enter a valid price"
+          }
+        },
+        "productStock": {
+          "label": "Product Stock",
+          "placeholder": "50",
+          "errors": {
+            "required": "Please enter product stock",
+            "invalid": "Please enter a valid stock"
+          }
+        },
+        "productDiscount": {
+          "label": "Product Discount",
+          "placeholder": "10",
+          "errors": {
+            "required": "Please enter product discount",
+            "invalid": "Please enter a valid discount"
+          }
+        },
+        "productColorEn": {
+          "label": "Product Color (En)",
+          "placeholder": "Red",
+          "errors": {
+            "required": "Please enter product color in English"
+          }
+        },
+        "productColorAr": {
+          "label": "Product Color (Ar)",
+          "placeholder": "أحمر",
+          "errors": {
+            "required": "Please enter product color in Arabic"
+          }
+        },
+        "productColor": {
+          "label": "Product Color",
+          "placeholder": "Red",
+          "errors": {
+            "required": "Please enter product color"
+          }
+        },
+        "productManufacturerEn": {
+          "label": "Product Manufacturer (En)",
+          "placeholder": "Gymshark",
+          "errors": {
+            "required": "Please enter product manufacturer in English"
+          }
+        },
+        "productManufacturerAr": {
+          "label": "Product Manufacturer (Ar)",
+          "placeholder": "جيم شارك",
+          "errors": {
+            "required": "Please enter product manufacturer in Arabic"
+          }
+        },
+        "productManufacturer": {
+          "label": "Product Manufacturer",
+          "placeholder": "Gymshark",
+          "errors": {
+            "required": "Please enter product manufacturer"
+          }
+        },
+        "productCategory": {
+          "label": "Product Category",
+          "placeholder": "Clothing",
+          "errors": {
+            "required": "Please enter product category"
+          }
+        },
+        "productWeight": {
+          "label": "Product Weight (kg)",
+          "placeholder": "1",
+          "errors": {
+            "required": "Please enter product weight",
+            "invalid": "Please enter a valid weight"
+          }
+        },
+        "productImages": {
+          "label": "Product Images",
+          "placeholder": "Choose Images",
+          "errors": {
+            "required": "Please select at least one image"
+          }
+        },
+        "productRank": {
+          "label": "Product Rank",
+          "placeholder": "1",
+          "errors": {
+            "required": "Please enter product rank"
+          }
+        }
+      }
+    }
+  },
+  "forms": {
+    "email": {
+      "label": "Email",
+      "placeholder": "johndoe@example.com",
+      "errors": {
+        "required": "Please enter your email",
+        "invalid": "Invalid email, Please enter a valid email"
+      }
+    },
+    "password": {
+      "label": "Password",
+      "placeholder": "************",
+      "errors": {
+        "required": "Please enter your password"
+      }
     }
   }
 }

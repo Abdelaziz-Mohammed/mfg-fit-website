@@ -5,6 +5,9 @@ import { toast } from "react-toastify";
 const AdminContext = createContext(null);
 
 export const AdminProvider = ({ children }) => {
+  const [lang, setLang] = useState(() => {
+    return localStorage.getItem("i18nextLng") || "en";
+  });
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
   const [coupons, setCoupons] = useState([]);
@@ -20,10 +23,10 @@ export const AdminProvider = ({ children }) => {
     fetchCoupons();
     fetchOrders();
     fetchProvinces();
-  }, []);
+  }, [lang]);
 
   // ------------- start products -------------
-  const addProduct = async (productData) => {
+  const addProduct = async (productData, lang) => {
     setLoading(true);
     setError("");
 
@@ -32,14 +35,14 @@ export const AdminProvider = ({ children }) => {
       const formData = new FormData();
 
       for (const key in productData) {
-        if (key === "imageUrl") {
-          formData.append("image", productData[key]);
+        if (key === "images") {
+          productData.images.forEach((file) => formData.append("images", file));
         } else {
           formData.append(key, productData[key]);
         }
       }
 
-      await axios.post("/api/products", formData, {
+      await axios.post(`/api/products?lang=${lang}`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
           Authorization: `Bearer ${token}`,
@@ -51,7 +54,7 @@ export const AdminProvider = ({ children }) => {
     } catch (err) {
       setError(err.response?.data?.message || "Error adding product");
       // logging to be removed
-      console.log(err);
+      // console.log(err);
     } finally {
       setLoading(false);
       setTimeout(() => setError(""), 8000);
@@ -63,10 +66,10 @@ export const AdminProvider = ({ children }) => {
     setError("");
 
     try {
-      const res = await axios.get("/api/products");
+      const res = await axios.get(`/api/products?lang=${lang}`);
       setProducts(res.data.data);
       // logging to be removed
-      console.log(res.data.data);
+      // console.log(res.data.data);
     } catch (err) {
       setError(err.response?.data?.message || "Error fetching products");
     } finally {
@@ -104,7 +107,7 @@ export const AdminProvider = ({ children }) => {
     } catch (err) {
       setError(err.response?.data?.message || "Error updating product");
       // logging to be removed
-      console.log(err);
+      // console.log(err);
     } finally {
       setLoading(false);
       setTimeout(() => setError(""), 8000);
@@ -129,7 +132,7 @@ export const AdminProvider = ({ children }) => {
     } catch (err) {
       setError(err.response?.data?.message || "Error deleting product");
       // logging to be removed
-      console.log(err);
+      // console.log(err);
     } finally {
       setLoading(false);
       setTimeout(() => setError(""), 8000);
@@ -177,7 +180,7 @@ export const AdminProvider = ({ children }) => {
     setError("");
 
     try {
-      const res = await axios.get("/api/categories");
+      const res = await axios.get(`/api/categories?lang=${lang}`);
       setCategories(res.data.data);
     } catch (err) {
       setError(err.response?.data?.message || "Error fetching categories");
@@ -261,7 +264,7 @@ export const AdminProvider = ({ children }) => {
       setError(err.response?.data?.message || "Error adding coupon");
       toast.error(err.response?.data?.message || "Error adding coupon");
       // logging to be removed
-      console.log(err);
+      // console.log(err);
     } finally {
       setLoading(false);
       setTimeout(() => setError(""), 8000);
@@ -274,7 +277,7 @@ export const AdminProvider = ({ children }) => {
 
     try {
       const token = JSON.parse(localStorage.getItem("user"))?.token;
-      const res = await axios.get("/api/coupons", {
+      const res = await axios.get(`/api/coupons?lang=${lang}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -283,11 +286,11 @@ export const AdminProvider = ({ children }) => {
       setCoupons(res.data.data.coupons);
 
       // logging to be removed
-      console.log(res.data.data.coupons);
+      // console.log(res.data.data.coupons);
     } catch (err) {
       setError(err.response?.data?.message || "Error fetching coupons");
       // logging to be removed
-      console.log(err);
+      // console.log(err);
     } finally {
       setLoading(false);
       setTimeout(() => setError(""), 8000);
@@ -312,7 +315,7 @@ export const AdminProvider = ({ children }) => {
     } catch (err) {
       setError(err.response?.data?.message || "Error deleting coupon");
       // logging to be removed
-      console.log(err);
+      // console.log(err);
       toast.error(err.response?.data?.message || "Error deleting coupon");
     } finally {
       setLoading(false);
@@ -334,7 +337,7 @@ export const AdminProvider = ({ children }) => {
     } catch (err) {
       setError(err.response?.data?.message || "Error creating order");
       // logging to be removed
-      console.log(err);
+      // console.log(err);
     } finally {
       setLoading(false);
       setTimeout(() => setError(""), 8000);
@@ -349,11 +352,11 @@ export const AdminProvider = ({ children }) => {
       const res = await axios.get("/api/orders");
       setOrders(res.data.data);
       // logging to be removed
-      console.log(res.data.data);
+      // console.log(res.data.data);
     } catch (err) {
       setError(err.response?.data?.message || "Error fetching orders");
       // logging to be removed
-      console.log(err);
+      // console.log(err);
     } finally {
       setLoading(false);
       setTimeout(() => setError(""), 8000);
@@ -382,7 +385,7 @@ export const AdminProvider = ({ children }) => {
     } catch (err) {
       setError(err.response?.data?.message || "Error updating order status");
       // logging to be removed
-      console.log(err);
+      // console.log(err);
     } finally {
       setLoading(false);
       setTimeout(() => setError(""), 8000);
@@ -409,7 +412,7 @@ export const AdminProvider = ({ children }) => {
     } catch (err) {
       setError(err.response?.data?.message || "Error adding province");
       // logging to be removed
-      console.log(err);
+      // console.log(err);
     } finally {
       setLoading(false);
       setTimeout(() => setError(""), 8000);
@@ -421,13 +424,13 @@ export const AdminProvider = ({ children }) => {
     setError("");
 
     try {
-      const res = await axios.get("/api/provinces");
+      const res = await axios.get(`/api/provinces?lang=${lang}`);
       setProvinces(res.data.data);
-      console.log(res);
+      // console.log(res);
     } catch (err) {
       setError(err.response?.data?.message || "Error fetching provinces");
       // logging to be removed
-      console.log(err);
+      // console.log(err);
     } finally {
       setLoading(false);
       setTimeout(() => setError(""), 8000);
@@ -452,7 +455,7 @@ export const AdminProvider = ({ children }) => {
     } catch (err) {
       setError(err.response?.data?.message || "Error updating province");
       // logging to be removed
-      console.log(err);
+      // console.log(err);
     } finally {
       setLoading(false);
       setTimeout(() => setError(""), 8000);
@@ -477,7 +480,7 @@ export const AdminProvider = ({ children }) => {
     } catch (err) {
       setError(err.response?.data?.message || "Error deleting province");
       // logging to be removed
-      console.log(err);
+      // console.log(err);
     } finally {
       setLoading(false);
       setTimeout(() => setError(""), 8000);
@@ -502,7 +505,7 @@ export const AdminProvider = ({ children }) => {
     } catch (err) {
       setError(err.response?.data?.message || "Error adding delivery fee");
       // logging to be removed
-      console.log(err);
+      // console.log(err);
     } finally {
       setLoading(false);
       setTimeout(() => setError(""), 8000);
@@ -523,7 +526,7 @@ export const AdminProvider = ({ children }) => {
     } catch (err) {
       setError(err.response?.data?.message || "Error removing delivery fee");
       // logging to be removed
-      console.log(err);
+      // console.log(err);
     } finally {
       setLoading(false);
       setTimeout(() => setError(""), 8000);
@@ -534,6 +537,8 @@ export const AdminProvider = ({ children }) => {
   return (
     <AdminContext.Provider
       value={{
+        lang,
+        setLang,
         // data fetching
         products,
         categories,

@@ -3,9 +3,11 @@ import { AiOutlineClose } from "react-icons/ai";
 import { FaArrowRight } from "react-icons/fa";
 import { useAdmin } from "../../context/AdminContext";
 import FormField from "./../../components/formField/FormField";
+import { useTranslation } from "react-i18next";
 
 function UpdateProduct({ onClose, product }) {
   const { updateProduct, loading } = useAdmin();
+  const { t } = useTranslation();
 
   const [formData, setFormData] = useState({
     name: product.name || "",
@@ -15,8 +17,8 @@ function UpdateProduct({ onClose, product }) {
     discount: product.discount || 0,
     color: product.color || "",
     manufacturer: product.manufacturer || "",
-    categoryName: product.categoryName || "",
-    imageUrl: product.imageUrl || null,
+    weight: product.weight || 0,
+    images: product.images || [],
     rank: product.rank || 0,
   });
 
@@ -28,8 +30,8 @@ function UpdateProduct({ onClose, product }) {
     discount: "",
     color: "",
     manufacturer: "",
-    categoryName: "",
-    imageUrl: "",
+    weight: "",
+    images: "",
     rank: "",
   });
 
@@ -44,7 +46,7 @@ function UpdateProduct({ onClose, product }) {
     if (!formData.name) {
       setFormErrors((prev) => ({
         ...prev,
-        name: "Please enter product name",
+        name: t("dashboard.products.forms.productName.errors.required"),
       }));
       return;
     } else {
@@ -54,7 +56,7 @@ function UpdateProduct({ onClose, product }) {
     if (!formData.description) {
       setFormErrors((prev) => ({
         ...prev,
-        description: "Please enter product description",
+        description: t("dashboard.products.forms.productDescription.errors.required"),
       }));
       return;
     } else {
@@ -64,13 +66,13 @@ function UpdateProduct({ onClose, product }) {
     if (!formData.price) {
       setFormErrors((prev) => ({
         ...prev,
-        price: "Please enter product price",
+        price: t("dashboard.products.forms.productPrice.errors.required"),
       }));
       return;
     } else if (isNaN(formData.price) || formData.price <= 0) {
       setFormErrors((prev) => ({
         ...prev,
-        price: "Please enter a valid price greater than 0",
+        price: t("dashboard.products.forms.productPrice.errors.invalid"),
       }));
       return;
     } else {
@@ -80,13 +82,13 @@ function UpdateProduct({ onClose, product }) {
     if (!formData.stock) {
       setFormErrors((prev) => ({
         ...prev,
-        stock: "Please enter product stock",
+        stock: t("dashboard.products.forms.productStock.errors.required"),
       }));
       return;
     } else if (isNaN(formData.stock) || formData.stock < 0) {
       setFormErrors((prev) => ({
         ...prev,
-        stock: "Please enter a valid stock quantity",
+        stock: t("dashboard.products.forms.productStock.errors.invalid"),
       }));
       return;
     } else {
@@ -96,13 +98,13 @@ function UpdateProduct({ onClose, product }) {
     if (!formData.discount) {
       setFormErrors((prev) => ({
         ...prev,
-        discount: "Please enter product discount",
+        discount: t("dashboard.products.forms.productDiscount.errors.required"),
       }));
       return;
     } else if (isNaN(formData.discount) || formData.discount < 0) {
       setFormErrors((prev) => ({
         ...prev,
-        discount: "Please enter a valid discount amount",
+        discount: t("dashboard.products.forms.productDiscount.errors.invalid"),
       }));
       return;
     } else {
@@ -112,7 +114,7 @@ function UpdateProduct({ onClose, product }) {
     if (!formData.color) {
       setFormErrors((prev) => ({
         ...prev,
-        color: "Please enter product color",
+        color: t("dashboard.products.forms.productColor.errors.required"),
       }));
       return;
     } else {
@@ -122,37 +124,43 @@ function UpdateProduct({ onClose, product }) {
     if (!formData.manufacturer) {
       setFormErrors((prev) => ({
         ...prev,
-        manufacturer: "Please enter product manufacturer",
+        manufacturer: t("dashboard.products.forms.productManufacturer.errors.required"),
       }));
       return;
     } else {
       setFormErrors((prev) => ({ ...prev, manufacturer: "" }));
     }
 
-    if (!formData.categoryName) {
+    if (!formData.weight) {
       setFormErrors((prev) => ({
         ...prev,
-        categoryName: "Please enter product category",
+        weight: t("dashboard.products.forms.productWeight.errors.required"),
+      }));
+      return;
+    } else if (isNaN(formData.weight) || formData.weight <= 0) {
+      setFormErrors((prev) => ({
+        ...prev,
+        weight: t("dashboard.products.forms.productWeight.errors.invalid"),
       }));
       return;
     } else {
-      setFormErrors((prev) => ({ ...prev, categoryName: "" }));
+      setFormErrors((prev) => ({ ...prev, weight: "" }));
     }
 
-    if (!formData.imageUrl) {
+    if (!formData.images || formData.images.length === 0) {
       setFormErrors((prev) => ({
         ...prev,
-        imageUrl: "Please enter product image URL",
+        images: t("dashboard.products.forms.productImages.errors.required"),
       }));
       return;
     } else {
-      setFormErrors((prev) => ({ ...prev, imageUrl: "" }));
+      setFormErrors((prev) => ({ ...prev, images: "" }));
     }
 
     if (!formData.rank) {
       setFormErrors((prev) => ({
         ...prev,
-        rank: "Please enter product rank",
+        rank: t("dashboard.products.forms.productRank.errors.required"),
       }));
       return;
     } else {
@@ -169,8 +177,8 @@ function UpdateProduct({ onClose, product }) {
       discount: 0,
       color: "",
       manufacturer: "",
-      categoryName: "",
-      imageUrl: null,
+      weight: "",
+      images: [],
       rank: 0,
     });
 
@@ -182,8 +190,8 @@ function UpdateProduct({ onClose, product }) {
       discount: "",
       color: "",
       manufacturer: "",
-      categoryName: "",
-      imageUrl: "",
+      weight: "",
+      images: [],
       rank: "",
     });
 
@@ -193,7 +201,7 @@ function UpdateProduct({ onClose, product }) {
   return (
     <div className="bg-white rounded-lg shadow-md p-6 space-y-4">
       <div className="flex items-center justify-between">
-        <h3 className="text-xl font-bold">Update Product</h3>
+        <h3 className="text-xl font-bold">{t("dashboard.products.updateProduct")}</h3>
         <button onClick={onClose} className="p-2">
           <AiOutlineClose className="text-gray-500 hover:text-gray-700 text-xl" />
         </button>
@@ -201,127 +209,125 @@ function UpdateProduct({ onClose, product }) {
       <form onSubmit={handleSubmit} className="space-y-5">
         {/* name */}
         <FormField
-          label={"Product Name"}
+          label={t("dashboard.products.forms.productName.label")}
           type={"text"}
           name={"name"}
-          placeholder={"New product"}
+          placeholder={t("dashboard.products.forms.productName.placeholder")}
           value={formData.name}
           onChange={handleChange}
           error={formErrors.name}
         />
         {/* description */}
         <FormField
-          label={"Product Description"}
+          label={t("dashboard.products.forms.productDescription.label")}
           type={"text"}
           name={"description"}
-          placeholder={"This is a new product"}
+          placeholder={t("dashboard.products.forms.productDescription.placeholder")}
           value={formData.description}
           onChange={handleChange}
           error={formErrors.description}
         />
         {/* price */}
         <FormField
-          label={"Product Price"}
+          label={t("dashboard.products.forms.productPrice.label")}
           type={"number"}
           name={"price"}
-          placeholder={"100"}
+          placeholder={t("dashboard.products.forms.productPrice.placeholder")}
           value={formData.price}
           onChange={handleChange}
           error={formErrors.price}
         />
         {/* stock */}
         <FormField
-          label={"Product Stock"}
+          label={t("dashboard.products.forms.productStock.label")}
           type={"number"}
           name={"stock"}
-          placeholder={"50"}
+          placeholder={t("dashboard.products.forms.productStock.placeholder")}
           value={formData.stock}
           onChange={handleChange}
           error={formErrors.stock}
         />
         {/* discount */}
         <FormField
-          label={"Product Discount"}
+          label={t("dashboard.products.forms.productDiscount.label")}
           type={"number"}
           name={"discount"}
-          placeholder={"10"}
+          placeholder={t("dashboard.products.forms.productDiscount.placeholder")}
           value={formData.discount}
           onChange={handleChange}
           error={formErrors.discount}
         />
         {/* color */}
         <FormField
-          label={"Product Color"}
+          label={t("dashboard.products.forms.productColor.label")}
           type={"text"}
           name={"color"}
-          placeholder={"Red"}
+          placeholder={t("dashboard.products.forms.productColor.placeholder")}
           value={formData.color}
           onChange={handleChange}
           error={formErrors.color}
         />
         {/* manufacturer */}
         <FormField
-          label={"Product Manufacturer"}
+          label={t("dashboard.products.forms.productManufacturer.label")}
           type={"text"}
           name={"manufacturer"}
-          placeholder={"Gym shark"}
+          placeholder={t("dashboard.products.forms.productManufacturer.placeholder")}
           value={formData.manufacturer}
           onChange={handleChange}
           error={formErrors.manufacturer}
         />
-        {/* categoryName */}
+        {/* weight */}
         <FormField
-          label={"Product Category"}
-          type={"text"}
-          name={"categoryName"}
-          placeholder={"Clothing"}
-          value={formData.categoryName}
+          label={t("dashboard.products.forms.productWeight.label")}
+          type={"number"}
+          name={"weight"}
+          placeholder={t("dashboard.products.forms.productWeight.placeholder")}
+          value={formData.weight}
           onChange={handleChange}
-          error={formErrors.categoryName}
+          error={formErrors.weight}
         />
-        {/* imageUrl */}
+        {/* images */}
         <div className="flex flex-col gap-1">
           <div
             className={`h-10 flex items-center border border-neutral-200 ${
-              formData.imageUrl ? "bg-neutral-100" : ""
+              formData.images?.length ? "bg-neutral-100" : ""
             } shadow rounded overflow-hidden`}
           >
             <label
               htmlFor="file-upload"
               className="cursor-pointer text-primary/90 font-semibold flex items-center gap-1 h-full
-              hover:text-primary hover:translate-x-0 transition bg-primary/10 py-2 pr-5 pl-7 -translate-x-3"
+            hover:text-primary hover:translate-x-0 transition bg-primary/10 py-2 pr-5 pl-7 -translate-x-3 rtl:translate-x-3"
             >
-              <span className="text-sm">Choose Product Image</span>
-              <FaArrowRight className="pt-1 text-xl" />
+              <span className="text-sm">{t("dashboard.products.forms.productImages.label")}</span>
+              <FaArrowRight className="pt-1 text-xl rtl:rotate-180" />
             </label>
             <input
               id="file-upload"
               type="file"
               accept="image/*"
-              onChange={(e) => setFormData({ ...formData, imageUrl: e.target.files[0] })}
+              multiple
+              onChange={(e) => setFormData({ ...formData, images: Array.from(e.target.files) })}
               className="hidden"
             />
-            {formData.imageUrl && (
-              <span
-                className="text-sm text-neutral-700 truncate bg-neutral-100
-              text-center py-3 font-medium flex-1"
-              >
-                {formData.imageUrl.name}
+            {formData.images?.length > 0 && (
+              <span className="text-sm text-neutral-700 truncate bg-neutral-100 text-center py-3 font-medium flex-1">
+                {formData.images.map((file) => file.name).join(", ")}
               </span>
             )}
           </div>
-          {formErrors.imageUrl.length > 0 && (
+          {formErrors.images?.length > 0 && (
             <p className="text-[13px] text-red-500">
-              {"* "} {formErrors.imageUrl}
+              {"* "} {formErrors.images}
             </p>
           )}
         </div>
         {/* rank */}
         <FormField
-          label={"Product Rank"}
+          label={t("dashboard.products.forms.productRank.label")}
           type={"number"}
           name={"rank"}
-          placeholder={"1"}
+          placeholder={t("dashboard.products.forms.productRank.placeholder")}
           value={formData.rank}
           onChange={handleChange}
           error={formErrors.rank}
@@ -333,7 +339,7 @@ function UpdateProduct({ onClose, product }) {
             disabled={loading}
             className="bg-primary text-white py-2 rounded-md hover:bg-primary/80 hoverEffect"
           >
-            {loading ? "Updating..." : "Update Product"}
+            {loading ? t("dashboard.products.updateProductLoading") : t("dashboard.products.updateProduct")}
           </button>
           {/* cancel btn */}
           <button
@@ -342,7 +348,7 @@ function UpdateProduct({ onClose, product }) {
             className="bg-red-500 text-white py-2 rounded-md hover:bg-red-400 hoverEffect"
             onClick={onClose}
           >
-            Cancel
+            {t("dashboard.products.cancel")}
           </button>
         </div>
       </form>

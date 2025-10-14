@@ -4,6 +4,7 @@ import AddProduct from "./AddProduct";
 import { useAdmin } from "../../context/AdminContext";
 import Loading from "./../../components/loading/Loading";
 import ProductCard from "./ProductCard";
+import { useTranslation } from "react-i18next";
 
 function Products() {
   const { products, loading } = useAdmin();
@@ -11,6 +12,7 @@ function Products() {
   const popUpRef = useRef(null);
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredProducts, setFilteredProducts] = useState(products);
+  const { t } = useTranslation();
 
   useEffect(() => setFilteredProducts(products), [products]);
 
@@ -49,15 +51,16 @@ function Products() {
           id="search"
           value={searchTerm}
           onChange={handleSearchChange}
-          placeholder="Search products..."
+          placeholder={t("dashboard.products.searchProducts")}
           className="outline-0 border border-neutral-300 focus:border-neutral-500 rounded-md p-2 min-[500px]:flex-1 max-[500px]:w-full"
         />
         <button
           onClick={() => setIsAddProductOpen(true)}
-          className="bg-primary/90 hover:bg-primary text-white rounded-md px-3 py-2 hoverEffect text-sm max-[500px]:w-full"
+          className="bg-primary/90 hover:bg-primary text-white rounded-md px-3 py-2 hoverEffect text-sm max-[500px]:w-full
+          flex rtl:flex-row-reverse gap-2 items-center justify-center"
         >
           <IoIosAddCircleOutline className="inline text-lg" />
-          <span> Add Product</span>
+          <span>{t("dashboard.products.addProduct")}</span>
         </button>
       </div>
       <div className="h-full">
@@ -71,8 +74,8 @@ function Products() {
           </div>
         ) : (
           <p className="bg-neutral-100 rounded-md h-96 text-center text-neutral-600 flex flex-col items-center justify-center px-4">
-            <b className="mb-1">No products available.</b> <br /> Go ahead and hit the add product button to add new
-            products.
+            <b className="mb-1">{t("dashboard.products.noProducts")}</b> <br />{" "}
+            {t("dashboard.products.noProductsDescription")}
           </p>
         )}
       </div>

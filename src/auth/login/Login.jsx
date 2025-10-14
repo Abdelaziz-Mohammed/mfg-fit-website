@@ -2,12 +2,13 @@ import { useEffect, useState } from "react";
 import { useAuth } from "../../context/AuthContext";
 import FormField from "./../../components/formField/FormField";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { FaLongArrowAltRight } from "react-icons/fa";
 import { Bounce, toast, ToastContainer } from "react-toastify";
 import i18n from "../../utils/i18n";
+import { useTranslation } from "react-i18next";
 
 function Login() {
   const { login, loading, error: loginError, user } = useAuth();
+  const { t } = useTranslation();
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -41,13 +42,13 @@ function Login() {
     if (!formData.email) {
       setFormErrors((prev) => ({
         ...prev,
-        email: "Please enter your email",
+        email: t("forms.email.errors.required"),
       }));
       return;
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
       setFormErrors((prev) => ({
         ...prev,
-        email: "Invalid email, Please enter a valid email",
+        email: t("forms.email.errors.invalid"),
       }));
       return;
     } else {
@@ -57,7 +58,7 @@ function Login() {
     if (!formData.password) {
       setFormErrors((prev) => ({
         ...prev,
-        password: "Please enter your password",
+        password: t("forms.password.errors.required"),
       }));
       return;
     } else {
@@ -79,29 +80,29 @@ function Login() {
       <div className="bg-neutral-50 min-h-screen w-full flex items-center justify-center">
         <div className="bg-white py-10 px-6 rounded-lg shadow-xl w-full max-w-lg my-8 mx-4 border border-neutral-200">
           <p className="text-2xl font-bold mb-2 text-center border-b border-b-neutral-200 pb-2">
-            Welcome back to{" "}
+            {t("general.loginWelcome")}{" "}
             <Link to={"/"} className="text-primary">
               MFG FIT
             </Link>
           </p>
-          <h2 className="text-2xl font-bold mb-4 text-center">Login</h2>
+          <h2 className="text-2xl font-bold mb-4 text-center">{t("general.login")}</h2>
           <form onSubmit={handleSubmit} className="space-y-8">
             {/* Email */}
             <FormField
-              label={"Email"}
+              label={t("forms.email.label")}
               type={"email"}
               name={"email"}
-              placeholder={"john.doe@example.com"}
+              placeholder={t("forms.email.placeholder")}
               value={formData.email}
               onChange={handleChange}
               error={formErrors.email}
             />
             {/* Password */}
             <FormField
-              label={"Password"}
+              label={t("forms.password.label")}
               type={"password"}
               name={"password"}
-              placeholder={"************"}
+              placeholder={t("forms.password.placeholder")}
               value={formData.password}
               onChange={handleChange}
               error={formErrors.password}
@@ -112,7 +113,7 @@ function Login() {
               className="w-full text-white bg-primary/95 hover:bg-primary py-2 rounded-md"
               disabled={loading}
             >
-              {loading ? "Logging in..." : "Login"}
+              {loading ? t("general.loginLoading") : t("general.login")}
             </button>
           </form>
           {/* login error */}

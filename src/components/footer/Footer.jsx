@@ -8,7 +8,9 @@ import {
   FaInstagram,
   FaPhone,
   FaTwitter,
+  FaTiktok,
   FaMapMarkerAlt,
+  FaYoutube,
 } from "react-icons/fa";
 import { FaCartShopping } from "react-icons/fa6";
 import { useTranslation } from "react-i18next";
@@ -17,9 +19,15 @@ function Footer() {
   const { t } = useTranslation();
 
   const socialMediaItems = [
-    { id: 1, title: t("footer.socialMedia.facebook"), link: "https://www.facebook.com", icon: <FaFacebook /> },
-    { id: 2, title: t("footer.socialMedia.instagram"), link: "https://www.instagram.com", icon: <FaInstagram /> },
-    { id: 3, title: t("footer.socialMedia.twitter"), link: "https://www.twitter.com", icon: <FaTwitter /> },
+    { id: 1, title: t("footer.socialMedia.facebook"), link: "https://www.facebook.com/mfg.eg", icon: <FaFacebook /> },
+    {
+      id: 2,
+      title: t("footer.socialMedia.instagram"),
+      link: "https://www.instagram.com/mfg.eg",
+      icon: <FaInstagram />,
+    },
+    { id: 3, title: t("footer.socialMedia.tiktok"), link: "https://www.tiktok.com/@mfg.eg", icon: <FaTiktok /> },
+    { id: 4, title: t("footer.socialMedia.youtube"), link: "https://www.youtube.com/@mfg_eg", icon: <FaYoutube /> },
   ];
 
   const navItems = [
@@ -69,13 +77,13 @@ function Footer() {
             <ul>
               {navItems.map((item) => (
                 <li key={item.id} className="w-full hover:bg-neutral-700 hoverEffect group">
-                  <a
-                    href={item.path}
+                  <Link
+                    to={item.path}
                     className="flex items-center gap-2 py-2 hover:text-primary group-hover:translate-x-3 rtl:group-hover:-translate-x-3 hoverEffect"
                   >
                     {item.icon}
                     <span className="text-sm">{item.title}</span>
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>

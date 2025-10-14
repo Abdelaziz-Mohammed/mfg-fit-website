@@ -1,4 +1,4 @@
-import { Bounce, toast, ToastContainer } from "react-toastify";
+import { Bounce, ToastContainer } from "react-toastify";
 import i18n from "./../utils/i18n";
 import { useEffect } from "react";
 import Sidebar from "./Sidebar";
@@ -7,12 +7,16 @@ import { Outlet } from "react-router-dom";
 
 function Dashboard() {
   useEffect(() => {
-    document.title = "Dashboard - MFG Fit";
+    document.title = "Dashboard - MFG";
   }, []);
 
   return (
     <>
-      <div className="flex min-h-screen max-h-screen">
+      <div
+        className={`flex ${
+          i18n.language === "ar" || (localStorage.getItem("i18nextLng") == "ar" && "flex-row-reverse")
+        } min-h-screen max-h-screen`}
+      >
         <div>
           <Sidebar />
         </div>

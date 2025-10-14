@@ -1,8 +1,21 @@
+import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { CiGlobe } from "react-icons/ci";
+import { useAdmin } from "../../context/AdminContext";
 
 function LanguageToggler() {
   const { i18n } = useTranslation();
+  const { setLang } = useAdmin();
+
+  useEffect(() => {
+    if (i18n.language === "ar") {
+      document.body.dir = "rtl";
+      setLang("ar");
+    } else {
+      document.body.dir = "ltr";
+      setLang("en");
+    }
+  }, [i18n.language]);
 
   return (
     <button

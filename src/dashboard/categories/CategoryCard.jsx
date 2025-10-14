@@ -36,6 +36,8 @@ function CategoryCard({ category }) {
     };
   }, []);
 
+  console.log(category);
+
   return (
     <>
       <div className="border border-neutral-200 rounded-md p-4 shadow hover:shadow-lg hoverEffect flex flex-wrap gap-4 sm:gap-6">

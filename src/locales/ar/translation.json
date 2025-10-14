@@ -1,4 +1,10 @@
 {
+  "general": {
+    "login": "تسجيل الدخول",
+    "logout": "تسجيل الخروج",
+    "loginWelcome": "مرحبًا بك مجددا في",
+    "loginLoading": "جاري تسجيل الدخول..."
+  },
   "header": {
     "navItems": {
       "home": "الرئيسية",
@@ -80,8 +86,9 @@
     },
     "socialMedia": {
       "facebook": "فيسبوك",
-      "twitter": "تويتر",
-      "instagram": "إنستغرام"
+      "instagram": "إنستغرام",
+      "tiktok": "تيك توك",
+      "youtube": "يوتيوب"
     },
     "contactUs": {
       "title": "تواصل معنا",
@@ -101,6 +108,200 @@
     "copyright": {
       "year": "2025",
       "text": "جميع الحقوق محفوظة"
+    }
+  },
+  "dashboard": {
+    "welcome": "مرحبًا بك في لوحة التحكم",
+    "slogan": "مكانك الخاص حيث يمكنك إدارة كل شيء.",
+    "navItems": {
+      "dashboard": "لوحة التحكم",
+      "products": "المنتجات",
+      "categories": "الاصناف",
+      "coupons": "الكوبونات",
+      "orders": "الطلبات",
+      "provinces": "المحافظات",
+      "settings": "الإعدادات"
+    },
+    "products": {
+      "addProduct": "إضافة منتج",
+      "updateProduct": "تحديث المنتج",
+      "addProductLoading": "جاري إضافة المنتج...",
+      "updateProductLoading": "جاري تحديث المنتج...",
+      "cancel": "إلغاء",
+      "update": "تحديث",
+      "delete": "حذف",
+      "deleteLoading": "جاري الحذف...",
+      "deleteMessage": "هل أنت متأكد أنك تريد حذف هذا المنتج؟",
+      "noProductImage": "لا توجد صورة متاحة",
+      "noProducts": "لا توجد منتجات متاحة.",
+      "noProductsDescription": "تابع واضغط على زر إضافة منتج لإضافة منتجات جديدة.",
+      "searchProducts": "ابحث عن المنتجات...",
+      "price": "السعر",
+      "currency": "جنيه",
+      "discount": "الخصم",
+      "weight": "الوزن",
+      "weightUnit": "كجم",
+      "stock": "المخزون",
+      "rank": "الترتيب",
+      "color": "اللون",
+      "category": "الفئة",
+      "manufacturer": "الشركة المصنعة",
+      "forms": {
+        "productNameEn": {
+          "label": "اسم المنتج (إنجليزي)",
+          "placeholder": "New product",
+          "errors": {
+            "required": "الرجاء إدخال اسم المنتج باللغة الإنجليزية"
+          }
+        },
+        "productNameAr": {
+          "label": "اسم المنتج (عربي)",
+          "placeholder": "منتج جديد",
+          "errors": {
+            "required": "الرجاء إدخال اسم المنتج باللغة العربية"
+          }
+        },
+        "productName": {
+          "label": "اسم المنتج",
+          "placeholder": "منتج جديد",
+          "errors": {
+            "required": "الرجاء إدخال اسم المنتج"
+          }
+        },
+        "productDescriptionEn": {
+          "label": "وصف المنتج (إنجليزي)",
+          "placeholder": "مثال: This is a new product",
+          "errors": {
+            "required": "الرجاء إدخال وصف المنتج باللغة الإنجليزية"
+          }
+        },
+        "productDescriptionAr": {
+          "label": "وصف المنتج (عربي)",
+          "placeholder": "مثال: هذا منتج جديد",
+          "errors": {
+            "required": "الرجاء إدخال وصف المنتج باللغة العربية"
+          }
+        },
+        "productDescription": {
+          "label": "وصف المنتج",
+          "placeholder": "مثال: This is a new product",
+          "errors": {
+            "required": "الرجاء إدخال وصف المنتج"
+          }
+        },
+        "productPrice": {
+          "label": "سعر المنتج",
+          "placeholder": "100",
+          "errors": {
+            "required": "الرجاء إدخال سعر المنتج",
+            "invalid": "الرجاء إدخال سعر صالح"
+          }
+        },
+        "productStock": {
+          "label": "مخزون المنتج",
+          "placeholder": "50",
+          "errors": {
+            "required": "الرجاء إدخال مخزون المنتج",
+            "invalid": "الرجاء إدخال مخزون صالح"
+          }
+        },
+        "productDiscount": {
+          "label": "خصم المنتج",
+          "placeholder": "10",
+          "errors": {
+            "required": "الرجاء إدخال خصم المنتج",
+            "invalid": "الرجاء إدخال خصم صالح"
+          }
+        },
+        "productColorEn": {
+          "label": "لون المنتج (إنجليزي)",
+          "placeholder": "Red",
+          "errors": {
+            "required": "الرجاء إدخال لون المنتج باللغة الإنجليزية"
+          }
+        },
+        "productColorAr": {
+          "label": "لون المنتج (عربي)",
+          "placeholder": "أحمر",
+          "errors": {
+            "required": "الرجاء إدخال لون المنتج باللغة العربية"
+          }
+        },
+        "productColor": {
+          "label": "لون المنتج",
+          "placeholder": "أحمر",
+          "errors": {
+            "required": "الرجاء إدخال لون المنتج"
+          }
+        },
+        "productManufacturerEn": {
+          "label": "الشركة المصنعة للمنتج (إنجليزي)",
+          "placeholder": "Gymshark",
+          "errors": {
+            "required": "الرجاء إدخال الشركة المصنعة للمنتج باللغة الإنجليزية"
+          }
+        },
+        "productManufacturerAr": {
+          "label": "الشركة المصنعة للمنتج (عربي)",
+          "placeholder": "جيم شارك",
+          "errors": {
+            "required": "الرجاء إدخال الشركة المصنعة للمنتج باللغة العربية"
+          }
+        },
+        "productManufacturer": {
+          "label": "الشركة المصنعة للمنتج",
+          "placeholder": "جيم شارك",
+          "errors": {
+            "required": "الرجاء إدخال الشركة المصنعة للمنتج"
+          }
+        },
+        "productCategory": {
+          "label": "فئة المنتج",
+          "placeholder": "ملابس",
+          "errors": {
+            "required": "الرجاء إدخال فئة المنتج"
+          }
+        },
+        "productWeight": {
+          "label": "وزن المنتج (كجم)",
+          "placeholder": "1",
+          "errors": {
+            "required": "الرجاء إدخال وزن المنتج",
+            "invalid": "الرجاء إدخال وزن صالح"
+          }
+        },
+        "productImages": {
+          "label": "صور المنتج",
+          "placeholder": "اختر الصور",
+          "errors": {
+            "required": "الرجاء اختيار صورة واحدة على الأقل"
+          }
+        },
+        "productRank": {
+          "label": "ترتيب المنتج",
+          "placeholder": "1",
+          "errors": {
+            "required": "الرجاء إدخال ترتيب المنتج"
+          }
+        }
+      }
+    }
+  },
+  "forms": {
+    "email": {
+      "label": "البريد الإلكتروني",
+      "placeholder": "johndoe@example.com",
+      "errors": {
+        "required": "الرجاء إدخال البريد الإلكتروني",
+        "invalid": "البريد الإلكتروني غير صالح، يرجى إدخال بريد إلكتروني صالح"
+      }
+    },
+    "password": {
+      "label": "كلمة المرور",
+      "placeholder": "************",
+      "errors": {
+        "required": "الرجاء إدخال كلمة المرور"
+      }
     }
   }
 }
