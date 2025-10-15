@@ -4,6 +4,7 @@ import AddCategory from "./AddCategory";
 import { useAdmin } from "../../context/AdminContext";
 import Loading from "./../../components/loading/Loading";
 import CategoryCard from "./CategoryCard";
+import { useTranslation } from "react-i18next";
 
 function Categories() {
   const { categories, loading } = useAdmin();
@@ -11,6 +12,7 @@ function Categories() {
   const popUpRef = useRef(null);
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredCategories, setFilteredCategories] = useState(categories);
+  const { t } = useTranslation();
 
   useEffect(() => setFilteredCategories(categories), [categories]);
 
@@ -49,15 +51,16 @@ function Categories() {
           id="search"
           value={searchTerm}
           onChange={handleSearchChange}
-          placeholder="Search categories..."
+          placeholder={t("dashboard.categories.searchCategories")}
           className="outline-0 border border-neutral-300 focus:border-neutral-500 rounded-md p-2 min-[500px]:flex-1 max-[500px]:w-full"
         />
         <button
           onClick={() => setIsAddCategoryOpen(true)}
-          className="bg-primary/90 hover:bg-primary text-white rounded-md px-3 py-2 hoverEffect text-sm max-[500px]:w-full"
+          className="bg-primary/90 hover:bg-primary text-white rounded-md px-3 py-2 hoverEffect text-sm max-[500px]:w-full
+          flex rtl:flex-row-reverse gap-2 items-center justify-center"
         >
           <IoIosAddCircleOutline className="inline text-lg" />
-          <span> Add Category</span>
+          <span>{t("dashboard.categories.addCategory")}</span>
         </button>
       </div>
       <div className="h-full">
@@ -71,8 +74,8 @@ function Categories() {
           </div>
         ) : (
           <p className="bg-neutral-100 rounded-md h-96 text-center text-neutral-600 flex flex-col items-center justify-center px-4">
-            <b className="mb-1">No categories available.</b> <br /> Go ahead and hit the add category button to add new
-            categories.
+            <b className="mb-1">{t("dashboard.categories.noCategories")}</b> <br />{" "}
+            {t("dashboard.categories.noCategoriesDescription")}
           </p>
         )}
       </div>

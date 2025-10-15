@@ -7,8 +7,6 @@ function DeleteProduct({ onClose, productId }) {
   const { t } = useTranslation();
 
   const handleDelete = async (productId) => {
-    console.log(productId);
-
     await deleteProduct(productId);
 
     onClose();

@@ -3,18 +3,21 @@ import { AiOutlineClose } from "react-icons/ai";
 import { FaArrowRight } from "react-icons/fa";
 import { useAdmin } from "../../context/AdminContext";
 import FormField from "./../../components/formField/FormField";
-import { toast } from "react-toastify";
+import { useTranslation } from "react-i18next";
 
 function AddCategory({ onClose }) {
   const { addCategory, loading } = useAdmin();
+  const { t } = useTranslation();
 
   const [formData, setFormData] = useState({
-    name: "",
+    nameEn: "",
+    nameAr: "",
     imageUrl: null,
   });
 
   const [formErrors, setFormErrors] = useState({
-    name: "",
+    nameEn: "",
+    nameAr: "",
     imageUrl: "",
   });
 
@@ -26,35 +29,48 @@ function AddCategory({ onClose }) {
     e.preventDefault();
 
     // basic validation
-    if (!formData.name) {
+    if (!formData.nameEn) {
       setFormErrors((prev) => ({
         ...prev,
-        name: "Please enter product name",
+        nameEn: t("dashboard.categories.forms.nameEn.errors.required"),
       }));
       return;
     } else {
-      setFormErrors((prev) => ({ ...prev, name: "" }));
+      setFormErrors((prev) => ({ ...prev, nameEn: "" }));
+    }
+
+    if (!formData.nameAr) {
+      setFormErrors((prev) => ({
+        ...prev,
+        nameAr: t("dashboard.categories.forms.nameAr.errors.required"),
+      }));
+      return;
+    } else {
+      setFormErrors((prev) => ({ ...prev, nameAr: "" }));
     }
 
     if (!formData.imageUrl) {
       setFormErrors((prev) => ({
         ...prev,
-        imageUrl: "Please enter product image URL",
+        imageUrl: t("dashboard.categories.forms.imageUrl.errors.required"),
       }));
       return;
     } else {
       setFormErrors((prev) => ({ ...prev, imageUrl: "" }));
     }
 
-    await addCategory(formData);
+    await addCategory({ name: formData.nameEn, imageUrl: formData.imageUrl }, "en");
+    await addCategory({ name: formData.nameAr, imageUrl: formData.imageUrl }, "ar");
 
     setFormData({
-      name: "",
+      nameEn: "",
+      nameAr: "",
       imageUrl: null,
     });
 
     setFormErrors({
-      name: "",
+      nameEn: "",
+      nameAr: "",
       imageUrl: "",
     });
 
@@ -64,21 +80,31 @@ function AddCategory({ onClose }) {
   return (
     <div className="bg-white rounded-lg shadow-md p-6 space-y-4">
       <div className="flex items-center justify-between">
-        <h3 className="text-xl font-bold">Add Category</h3>
+        <h3 className="text-xl font-bold">{t("dashboard.categories.addCategory")}</h3>
         <button onClick={onClose} className="p-2">
           <AiOutlineClose className="text-gray-500 hover:text-gray-700 text-xl" />
         </button>
       </div>
       <form onSubmit={handleSubmit} className="space-y-5">
-        {/* name */}
+        {/* nameEn */}
         <FormField
-          label={"Category Name"}
+          label={t("dashboard.categories.forms.nameEn.label")}
           type={"text"}
-          name={"name"}
-          placeholder={"New category"}
-          value={formData.name}
+          name={"nameEn"}
+          placeholder={t("dashboard.categories.forms.nameEn.placeholder")}
+          value={formData.nameEn}
           onChange={handleChange}
-          error={formErrors.name}
+          error={formErrors.nameEn}
+        />
+        {/* nameAr */}
+        <FormField
+          label={t("dashboard.categories.forms.nameAr.label")}
+          type={"text"}
+          name={"nameAr"}
+          placeholder={t("dashboard.categories.forms.nameAr.placeholder")}
+          value={formData.nameAr}
+          onChange={handleChange}
+          error={formErrors.nameAr}
         />
         {/* imageUrl */}
         <div className="flex flex-col gap-1">
@@ -90,10 +116,10 @@ function AddCategory({ onClose }) {
             <label
               htmlFor="file-upload"
               className="cursor-pointer text-primary/90 font-semibold flex items-center gap-1 h-full
-              hover:text-primary hover:translate-x-0 transition bg-primary/10 py-2 pr-5 pl-7 -translate-x-3"
+              hover:text-primary hover:translate-x-0 transition bg-primary/10 py-2 pr-5 pl-7 -translate-x-3 rtl:translate-x-3"
             >
-              <span className="text-sm">Choose Category Image</span>
-              <FaArrowRight className="pt-1 text-xl" />
+              <span className="text-sm">{t("dashboard.categories.forms.imageUrl.label")}</span>
+              <FaArrowRight className="pt-1 text-xl rtl:rotate-180" />
             </label>
             <input
               id="file-upload"
@@ -124,7 +150,7 @@ function AddCategory({ onClose }) {
             disabled={loading}
             className="bg-primary text-white py-2 rounded-md hover:bg-primary/80 hoverEffect"
           >
-            {loading ? "Adding..." : "Add Category"}
+            {loading ? t("dashboard.categories.addCategoryLoading") : t("dashboard.categories.addCategory")}
           </button>
           {/* cancel btn */}
           <button
@@ -133,7 +159,7 @@ function AddCategory({ onClose }) {
             className="bg-red-500 text-white py-2 rounded-md hover:bg-red-400 hoverEffect"
             onClick={onClose}
           >
-            Cancel
+            {t("dashboard.categories.cancel")}
           </button>
         </div>
       </form>

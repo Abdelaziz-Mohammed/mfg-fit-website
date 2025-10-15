@@ -53,8 +53,6 @@ export const AdminProvider = ({ children }) => {
       toast.success("Product added successfully!");
     } catch (err) {
       setError(err.response?.data?.message || "Error adding product");
-      // logging to be removed
-      // console.log(err);
     } finally {
       setLoading(false);
       setTimeout(() => setError(""), 8000);
@@ -68,8 +66,6 @@ export const AdminProvider = ({ children }) => {
     try {
       const res = await axios.get(`/api/products?lang=${lang}`);
       setProducts(res.data.data);
-      // logging to be removed
-      // console.log(res.data.data);
     } catch (err) {
       setError(err.response?.data?.message || "Error fetching products");
     } finally {
@@ -106,8 +102,6 @@ export const AdminProvider = ({ children }) => {
       toast.success("Product updated successfully!");
     } catch (err) {
       setError(err.response?.data?.message || "Error updating product");
-      // logging to be removed
-      // console.log(err);
     } finally {
       setLoading(false);
       setTimeout(() => setError(""), 8000);
@@ -131,8 +125,6 @@ export const AdminProvider = ({ children }) => {
       toast.success("Product deleted successfully!");
     } catch (err) {
       setError(err.response?.data?.message || "Error deleting product");
-      // logging to be removed
-      // console.log(err);
     } finally {
       setLoading(false);
       setTimeout(() => setError(""), 8000);
@@ -141,7 +133,7 @@ export const AdminProvider = ({ children }) => {
   // ------------- end products -------------
 
   // ------------- start categories -------------
-  const addCategory = async (categoryData) => {
+  const addCategory = async (categoryData, lang) => {
     setLoading(true);
     setError("");
 
@@ -157,7 +149,7 @@ export const AdminProvider = ({ children }) => {
         }
       }
 
-      await axios.post("/api/categories", formData, {
+      await axios.post(`/api/categories?lang=${lang}`, formData, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

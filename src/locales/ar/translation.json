@@ -285,6 +285,51 @@
           }
         }
       }
+    },
+    "categories": {
+      "addCategory": "إضافة فئة",
+      "updateCategory": "تحديث الفئة",
+      "addCategoryLoading": "جارٍ إضافة الفئة...",
+      "updateCategoryLoading": "جارٍ تحديث الفئة...",
+      "cancel": "إلغاء",
+      "update": "تحديث",
+      "delete": "حذف",
+      "deleteLoading": "جارٍ حذف...",
+      "deleteMessage": "هل أنت متأكد أنك تريد حذف هذه الفئة؟",
+      "noCategoryImage": "لا توجد صورة متاحة",
+      "noCategories": "لا توجد فئات متاحة.",
+      "noCategoriesDescription": "يمكنك الضغط على زر إضافة فئة لإضافة فئات جديدة.",
+      "searchCategories": "البحث عن فئات...",
+      "forms": {
+        "nameEn": {
+          "label": "اسم الفئة (انجليزي)",
+          "placeholder": "Ex: Clothing",
+          "errors": {
+            "required": "الرجاء إدخال اسم الفئة باللغة الإنجليزية"
+          }
+        },
+        "nameAr": {
+          "label": "اسم الفئة (عربي)",
+          "placeholder": "Ex: ملابس",
+          "errors": {
+            "required": "الرجاء إدخال اسم الفئة باللغة العربية"
+          }
+        },
+        "name": {
+          "label": "اسم الفئة",
+          "placeholder": "فئة جديدة",
+          "errors": {
+            "required": "الرجاء إدخال اسم الفئة"
+          }
+        },
+        "imageUrl": {
+          "label": "صورة الفئة",
+          "placeholder": "اختر صورة",
+          "errors": {
+            "required": "الرجاء اختيار صورة"
+          }
+        }
+      }
     }
   },
   "forms": {

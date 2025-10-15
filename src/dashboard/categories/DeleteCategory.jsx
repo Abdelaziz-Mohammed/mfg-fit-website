@@ -1,8 +1,10 @@
 import { AiOutlineClose } from "react-icons/ai";
 import { useAdmin } from "../../context/AdminContext";
+import { useTranslation } from "react-i18next";
 
 function DeleteCategory({ onClose, categoryId }) {
   const { deleteCategory, loading } = useAdmin();
+  const { t } = useTranslation();
 
   const handleDelete = async (categoryId) => {
     console.log(categoryId);
@@ -15,17 +17,17 @@ function DeleteCategory({ onClose, categoryId }) {
   return (
     <div className="relative bg-white pt-20 pb-10 px-6 rounded-md shadow-lg w-96 max-w-full">
       <div className="flex flex-col gap-12">
-        <h2 className="text-lg font-semibold text-center">Are you sure you want to delete this category?</h2>
+        <h2 className="text-lg font-semibold text-center">{t("dashboard.categories.deleteMessage")}</h2>
         <div className="grid grid-cols-2 gap-4">
           <button
             onClick={() => handleDelete(categoryId)}
             disabled={loading}
             className="bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700 mr-4"
           >
-            Delete
+            {t("dashboard.categories.delete")}
           </button>
           <button onClick={onClose} disabled={loading} className="bg-gray-300 px-4 py-2 rounded-md hover:bg-gray-400">
-            Cancel
+            {t("dashboard.categories.cancel")}
           </button>
         </div>
       </div>
