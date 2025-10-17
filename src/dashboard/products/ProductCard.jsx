@@ -78,7 +78,7 @@ const ProductCard = ({ product }) => {
                 <b className="text-neutral-800">{t("dashboard.products.color")}:</b> {product.translations[0].color}
               </p>
               <p>
-                <b className="text-neutral-800">{t("dashboard.products.category")}:</b> {product.category.name}
+                <b className="text-neutral-800">{t("dashboard.products.category")}:</b> {product.categorys}
               </p>
               <p>
                 <b className="text-neutral-800">{t("dashboard.products.manufacturer")}:</b>{" "}

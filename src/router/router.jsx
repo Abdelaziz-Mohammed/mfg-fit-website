@@ -5,6 +5,8 @@ import Home from "./../pages/home/Home";
 import Shop from "./../pages/shop/Shop";
 import About from "./../pages/about/About";
 import Contact from "./../pages/contact/Contact";
+import Cart from "../pages/cart/Cart";
+import Checkout from "../pages/checkout/Checkout";
 import Login from "./../auth/login/Login";
 import Dashboard from "./../dashboard/Dashboard";
 import ProtectedRoute from "./../components/protectedRoute/ProtectedRoute";
@@ -14,7 +16,7 @@ import Categories from "./../dashboard/categories/Categories";
 import Coupons from "./../dashboard/coupons/Coupons";
 import Orders from "./../dashboard/orders/Orders";
 import Provinces from "./../dashboard/provinces/Provinces";
-import Settings from "./../dashboard/settings/Settings";
+import Ads from "./../dashboard/ads/Ads";
 
 const router = createBrowserRouter([
   {
@@ -37,6 +39,14 @@ const router = createBrowserRouter([
       {
         path: "/contact",
         element: <Contact />,
+      },
+      {
+        path: "/cart",
+        element: <Cart />,
+      },
+      {
+        path: "/checkout",
+        element: <Checkout />,
       },
     ],
   },
@@ -79,8 +89,8 @@ const router = createBrowserRouter([
         element: <Provinces />,
       },
       {
-        path: "settings",
-        element: <Settings />,
+        path: "ads",
+        element: <Ads />,
       },
     ],
   },

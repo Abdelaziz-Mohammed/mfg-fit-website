@@ -51,10 +51,6 @@ const OrderCard = ({ order }) => {
                   </p>
                 )}
                 <p className="flex items-center gap-1 text-neutral-600 text-base">
-                  <strong className="text-neutral-800">Province:</strong>
-                  {order.province.name}
-                </p>
-                <p className="flex items-center gap-1 text-neutral-600 text-base">
                   <strong className="text-neutral-800">City:</strong>
                   {order.city}
                 </p>
@@ -69,9 +65,13 @@ const OrderCard = ({ order }) => {
                   <strong className="text-neutral-800">ID:</strong>
                   {order.id}
                 </p>
-                <p className="flex items-center gap-1 text-neutral-600 text-base">
-                  <strong className="text-neutral-800">Total price:</strong>
-                  {order.totalPrice}
+                <p className="flex items-center gap-2 text-neutral-600 text-base">
+                  <strong className="text-neutral-800 text-lg font-bold">Total price:</strong>
+                  {order.totalPrice} <span className="text-gray-900 text-sm font-medium">L.E</span>
+                </p>
+                <p className="flex items-center gap-2 text-neutral-600 text-base">
+                  <strong className="text-neutral-800 text-lg font-bold">Total fee:</strong>
+                  {order.totalFee} <span className="text-gray-900 text-sm font-medium">L.E</span>
                 </p>
                 <div className="flex flex-col gap-1 text-neutral-600 text-base">
                   <p className="text-primary font-semibold mb-2">Items:</p>
@@ -110,7 +110,9 @@ const OrderCard = ({ order }) => {
             </button>
           </div>
         ) : (
-          <h2>Order {order.id}</h2>
+          <h2>
+            Order - {order.userFirstName + " " + order.userLastName} - {order.city}
+          </h2>
         )}
       </div>
       {isUpdateOrderStatusOpen && (

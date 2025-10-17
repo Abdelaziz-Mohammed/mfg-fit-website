@@ -7,7 +7,7 @@ import {
   MdOutlineLocalOffer,
   MdOutlineLocationOn,
   MdOutlineProductionQuantityLimits,
-  MdOutlineSettings,
+  MdOutlineCampaign,
   MdOutlineShoppingCart,
 } from "react-icons/md";
 import { CiLogout } from "react-icons/ci";
@@ -33,7 +33,7 @@ function Sidebar() {
     { id: 4, name: t("dashboard.navItems.coupons"), path: "/dashboard/coupons", icon: <MdOutlineLocalOffer /> },
     { id: 5, name: t("dashboard.navItems.orders"), path: "/dashboard/orders", icon: <MdOutlineShoppingCart /> },
     { id: 6, name: t("dashboard.navItems.provinces"), path: "/dashboard/provinces", icon: <MdOutlineLocationOn /> },
-    { id: 7, name: t("dashboard.navItems.settings"), path: "/dashboard/settings", icon: <MdOutlineSettings /> },
+    { id: 7, name: t("dashboard.navItems.ads"), path: "/dashboard/ads", icon: <MdOutlineCampaign /> },
   ];
 
   useEffect(() => {

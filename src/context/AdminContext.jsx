@@ -13,6 +13,7 @@ export const AdminProvider = ({ children }) => {
   const [coupons, setCoupons] = useState([]);
   const [orders, setOrders] = useState([]);
   const [provinces, setProvinces] = useState([]);
+  const [ads, setAds] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
@@ -23,9 +24,10 @@ export const AdminProvider = ({ children }) => {
     fetchCoupons();
     fetchOrders();
     fetchProvinces();
+    fetchAds();
   }, [lang]);
 
-  // ------------- start products -------------
+  //#region products
   const addProduct = async (productData, lang) => {
     setLoading(true);
     setError("");
@@ -66,6 +68,8 @@ export const AdminProvider = ({ children }) => {
     try {
       const res = await axios.get(`/api/products?lang=${lang}`);
       setProducts(res.data.data);
+      // logging to be removed
+      // console.log(res.data.data);
     } catch (err) {
       setError(err.response?.data?.message || "Error fetching products");
     } finally {
@@ -130,9 +134,9 @@ export const AdminProvider = ({ children }) => {
       setTimeout(() => setError(""), 8000);
     }
   };
-  // ------------- end products -------------
+  //#endregion
 
-  // ------------- start categories -------------
+  //#region categories
   const addCategory = async (categoryData, lang) => {
     setLoading(true);
     setError("");
@@ -232,17 +236,17 @@ export const AdminProvider = ({ children }) => {
       setTimeout(() => setError(""), 8000);
     }
   };
-  // ------------- end categories -------------
+  //#endregion categories
 
-  // ------------- start coupons -------------
-  const createCouponForProduct = async (couponData, productId) => {
+  //#region coupons
+  const createCoupon = async (couponData) => {
     setLoading(true);
     setError("");
 
     try {
       const token = JSON.parse(localStorage.getItem("user"))?.token;
 
-      await axios.post(`/api/coupons/${productId}/products`, couponData, {
+      await axios.post("/api/coupons/products", couponData, {
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
@@ -269,7 +273,7 @@ export const AdminProvider = ({ children }) => {
 
     try {
       const token = JSON.parse(localStorage.getItem("user"))?.token;
-      const res = await axios.get(`/api/coupons?lang=${lang}`, {
+      const res = await axios.get("/api/coupons", {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -281,6 +285,34 @@ export const AdminProvider = ({ children }) => {
       // console.log(res.data.data.coupons);
     } catch (err) {
       setError(err.response?.data?.message || "Error fetching coupons");
+      // logging to be removed
+      // console.log(err);
+    } finally {
+      setLoading(false);
+      setTimeout(() => setError(""), 8000);
+    }
+  };
+
+  const applyCoupon = async (couponCode) => {
+    setLoading(true);
+    setError("");
+    try {
+      const token = JSON.parse(localStorage.getItem("user"))?.token;
+
+      await axios.post(
+        "/api/coupons/use",
+        { code: couponCode },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      fetchCoupons();
+      toast.success("Coupon applied successfully!");
+    } catch (err) {
+      setError(err.response?.data?.message || "Error applying coupon");
       // logging to be removed
       // console.log(err);
     } finally {
@@ -307,16 +339,16 @@ export const AdminProvider = ({ children }) => {
     } catch (err) {
       setError(err.response?.data?.message || "Error deleting coupon");
       // logging to be removed
-      // console.log(err);
+      console.log(err);
       toast.error(err.response?.data?.message || "Error deleting coupon");
     } finally {
       setLoading(false);
       setTimeout(() => setError(""), 8000);
     }
   };
-  // ------------- end coupons -------------
+  //#endregion coupons
 
-  // ------------- start orders -------------
+  //#region orders
   const createNewOrder = async (orderData, provinceId) => {
     setLoading(true);
     setError("");
@@ -383,17 +415,17 @@ export const AdminProvider = ({ children }) => {
       setTimeout(() => setError(""), 8000);
     }
   };
-  // ------------- end orders -------------
+  //#endregion orders
 
-  // ------------- start provinces -------------
-  const addProvince = async (provinceData) => {
+  //#region provinces
+  const addProvince = async (provinceData, lang) => {
     setLoading(true);
     setError("");
 
     try {
       const token = JSON.parse(localStorage.getItem("user"))?.token;
 
-      await axios.post("/api/provinces", provinceData, {
+      await axios.post(`/api/provinces?lang=${lang}`, provinceData, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -418,9 +450,27 @@ export const AdminProvider = ({ children }) => {
     try {
       const res = await axios.get(`/api/provinces?lang=${lang}`);
       setProvinces(res.data.data);
-      // console.log(res);
+      // logging to be removed
+      // console.log(res.data.data);
     } catch (err) {
       setError(err.response?.data?.message || "Error fetching provinces");
+      // logging to be removed
+      // console.log(err);
+    } finally {
+      setLoading(false);
+      setTimeout(() => setError(""), 8000);
+    }
+  };
+
+  const fetchProvinceById = async (provinceId) => {
+    setLoading(true);
+    setError("");
+
+    try {
+      const res = await axios.get(`/api/provinces/${provinceId}`);
+      return res.data.data;
+    } catch (err) {
+      setError(err.response?.data?.message || "Error fetching province");
       // logging to be removed
       // console.log(err);
     } finally {
@@ -524,7 +574,83 @@ export const AdminProvider = ({ children }) => {
       setTimeout(() => setError(""), 8000);
     }
   };
-  // ------------- end provinces -------------
+  //#endregion provinces
+
+  //#region ads
+  const createAd = async (adData, productId) => {
+    setLoading(true);
+    setError("");
+
+    try {
+      const token = JSON.parse(localStorage.getItem("user"))?.token;
+
+      await axios.post(`/api/ad/${productId}/products`, adData, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      toast.success("Ad created successfully!");
+      fetchAds();
+    } catch (err) {
+      setError(err.response?.data?.message || "Error creating an ad");
+      // logging to be removed
+      // console.log(err);
+    } finally {
+      setLoading(false);
+      setTimeout(() => setError(""), 8000);
+    }
+  };
+
+  const fetchAds = async () => {
+    setLoading(true);
+    setError("");
+
+    try {
+      const token = JSON.parse(localStorage.getItem("user"))?.token;
+      const res = await axios.get("/api/ad", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      setAds(res.data.data);
+      // logging to be removed
+      // console.log(res.data.data);
+    } catch (err) {
+      setError(err.response?.data?.message || "Error fetching ads");
+      // logging to be removed
+      // console.log(err);
+    } finally {
+      setLoading(false);
+      setTimeout(() => setError(""), 8000);
+    }
+  };
+
+  const deleteAd = async (adId) => {
+    setLoading(true);
+    setError("");
+
+    try {
+      const token = JSON.parse(localStorage.getItem("user"))?.token;
+      await axios.delete(`/api/ad/${adId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      fetchAds();
+      toast.success("Ad deleted successfully!");
+    } catch (err) {
+      setError(err.response?.data?.message || "Error deleting ad");
+      // logging to be removed
+      // console.log(err);
+    } finally {
+      setLoading(false);
+      setTimeout(() => setError(""), 8000);
+    }
+  };
+
+  //#endregion ads
 
   return (
     <AdminContext.Provider
@@ -537,6 +663,7 @@ export const AdminProvider = ({ children }) => {
         coupons,
         orders,
         provinces,
+        ads,
         // loading and error states
         loading,
         error,
@@ -549,17 +676,23 @@ export const AdminProvider = ({ children }) => {
         updateCategory,
         deleteCategory,
         // coupons functions
-        createCouponForProduct,
+        createCoupon,
+        applyCoupon,
         deleteCoupon,
         // orders functions
         createNewOrder,
         updateOrderStatus,
         // provinces functions
+        fetchProvinceById,
         addProvince,
         updateProvince,
         deleteProvince,
         addDeliveryFeeToProvince,
         removeDeliveryFeeFromProvince,
+        // ads functions
+        createAd,
+        fetchAds,
+        deleteAd,
       }}
     >
       {children}

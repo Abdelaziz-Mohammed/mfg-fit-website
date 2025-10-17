@@ -1,12 +1,12 @@
 import { useState } from "react";
 import { AiOutlineClose } from "react-icons/ai";
-import { FaArrowRight } from "react-icons/fa";
 import { useAdmin } from "../../context/AdminContext";
 import FormField from "./../../components/formField/FormField";
+import { useTranslation } from "react-i18next";
 
 function AddCoupon({ onClose }) {
-  const { createCouponForProduct, products, loading } = useAdmin();
-  const [productId, setProductId] = useState(-1);
+  const { createCoupon, loading } = useAdmin();
+  const { t } = useTranslation();
 
   const [formData, setFormData] = useState({
     code: "",
@@ -18,7 +18,6 @@ function AddCoupon({ onClose }) {
     code: "",
     discount: "",
     validTo: "",
-    productId: "",
   });
 
   const handleChange = (e) => {
@@ -32,7 +31,7 @@ function AddCoupon({ onClose }) {
     if (!formData.code) {
       setFormErrors((prev) => ({
         ...prev,
-        code: "Please enter coupon code",
+        code: t("dashboard.coupons.forms.code.errors.required"),
       }));
       return;
     } else {
@@ -42,7 +41,7 @@ function AddCoupon({ onClose }) {
     if (!formData.discount) {
       setFormErrors((prev) => ({
         ...prev,
-        discount: "Please enter coupon discount",
+        discount: t("dashboard.coupons.forms.discount.errors.required"),
       }));
       return;
     } else {
@@ -52,27 +51,20 @@ function AddCoupon({ onClose }) {
     if (!formData.validTo) {
       setFormErrors((prev) => ({
         ...prev,
-        validTo: "Please enter coupon expiration date",
+        validTo: t("dashboard.coupons.forms.validTo.errors.required"),
       }));
       return;
     } else if (new Date(formData.validTo) < new Date()) {
       setFormErrors((prev) => ({
         ...prev,
-        validTo: "Expiration date must be in the future",
+        validTo: t("dashboard.coupons.forms.validTo.errors.invalid"),
       }));
       return;
     } else {
       setFormErrors((prev) => ({ ...prev, validTo: "" }));
     }
 
-    if (productId === -1) {
-      setFormErrors((prev) => ({ ...prev, productId: "Please select a product for the coupon" }));
-      return;
-    } else {
-      setFormErrors((prev) => ({ ...prev, productId: "" }));
-    }
-
-    await createCouponForProduct({ ...formData, discount: parseFloat(formData.discount) }, productId);
+    await createCoupon({ ...formData, discount: parseFloat(formData.discount), type: "PERCENT" });
 
     setFormData({
       code: "",
@@ -92,7 +84,7 @@ function AddCoupon({ onClose }) {
   return (
     <div className="bg-white rounded-lg shadow-md p-6 space-y-4">
       <div className="flex items-center justify-between">
-        <h3 className="text-xl font-bold">Add Coupon</h3>
+        <h3 className="text-xl font-bold">{t("dashboard.coupons.addCoupon")}</h3>
         <button onClick={onClose} className="p-2">
           <AiOutlineClose className="text-gray-500 hover:text-gray-700 text-xl" />
         </button>
@@ -100,60 +92,41 @@ function AddCoupon({ onClose }) {
       <form onSubmit={handleSubmit} className="space-y-5">
         {/* coupon code */}
         <FormField
-          label={"Coupon Code"}
+          label={t("dashboard.coupons.forms.code.label")}
           type={"text"}
           name={"code"}
-          placeholder={"New coupon code"}
+          placeholder={t("dashboard.coupons.forms.code.placeholder")}
           value={formData.code}
           onChange={handleChange}
           error={formErrors.code}
         />
         {/* coupon discount */}
         <FormField
-          label={"Coupon Discount"}
+          label={t("dashboard.coupons.forms.discount.label")}
           type={"number"}
           name={"discount"}
-          placeholder={"10 (for 10%)"}
+          placeholder={t("dashboard.coupons.forms.discount.placeholder")}
           value={formData.discount}
           onChange={handleChange}
           error={formErrors.discount}
         />
         {/* valid to */}
         <FormField
-          label={"Valid To"}
+          label={t("dashboard.coupons.forms.validTo.label")}
           type={"date"}
           name={"validTo"}
-          placeholder={"YYYY-MM-DD"}
+          placeholder={t("dashboard.coupons.forms.validTo.placeholder")}
           value={formData.validTo}
           onChange={handleChange}
           error={formErrors.validTo}
         />
-        {/* select product */}
-        <div className="flex flex-col gap-1">
-          <label className="block mb-1 font-medium">Select Product</label>
-          <div className="flex items-center gap-2 cursor-pointer">
-            <select
-              value={productId}
-              onChange={(e) => setProductId(e.target.value)}
-              className="border border-neutral-300 rounded-md p-2 w-full hover:border-neutral-400 cursor-pointer outline-0"
-            >
-              <option value="">Select a product</option>
-              {products.map((product) => (
-                <option key={product.id} value={product.id}>
-                  {product.name}
-                </option>
-              ))}
-            </select>
-          </div>
-          {formErrors.productId && <p className="text-red-500 text-xs">* {formErrors.productId}</p>}
-        </div>
         <div className="grid grid-cols-2 gap-4">
           <button
             type="submit"
             disabled={loading}
             className="bg-primary text-white py-2 rounded-md hover:bg-primary/80 hoverEffect"
           >
-            {loading ? "Creating..." : "Create Coupon"}
+            {loading ? t("dashboard.coupons.createCouponLoading") : t("dashboard.coupons.createCoupon")}
           </button>
           {/* cancel btn */}
           <button
@@ -162,7 +135,7 @@ function AddCoupon({ onClose }) {
             className="bg-red-500 text-white py-2 rounded-md hover:bg-red-400 hoverEffect"
             onClick={onClose}
           >
-            Cancel
+            {t("dashboard.coupons.cancel")}
           </button>
         </div>
       </form>

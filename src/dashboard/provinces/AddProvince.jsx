@@ -2,17 +2,21 @@ import { useState } from "react";
 import { AiOutlineClose } from "react-icons/ai";
 import { useAdmin } from "../../context/AdminContext";
 import FormField from "./../../components/formField/FormField";
+import { useTranslation } from "react-i18next";
 
 function AddProvince({ onClose }) {
   const { addProvince, loading } = useAdmin();
+  const { t } = useTranslation();
 
   const [formData, setFormData] = useState({
-    name: "",
+    nameEn: "",
+    nameAr: "",
     deliveryFees: 0,
   });
 
   const [formErrors, setFormErrors] = useState({
-    name: "",
+    nameEn: "",
+    nameAr: "",
     deliveryFees: "",
   });
 
@@ -24,41 +28,54 @@ function AddProvince({ onClose }) {
     e.preventDefault();
 
     // basic validation
-    if (!formData.name) {
+    if (!formData.nameEn) {
       setFormErrors((prev) => ({
         ...prev,
-        name: "Please enter province name",
+        nameEn: t("dashboard.provinces.forms.nameEn.errors.required"),
       }));
       return;
     } else {
       setFormErrors((prev) => ({ ...prev, name: "" }));
     }
 
+    if (!formData.nameAr) {
+      setFormErrors((prev) => ({
+        ...prev,
+        nameAr: t("dashboard.provinces.forms.nameAr.errors.required"),
+      }));
+      return;
+    } else {
+      setFormErrors((prev) => ({ ...prev, nameAr: "" }));
+    }
+
     if (!formData.deliveryFees) {
       setFormErrors((prev) => ({
         ...prev,
-        deliveryFees: "Please enter delivery fee",
+        deliveryFees: t("dashboard.provinces.forms.deliveryFees.errors.required"),
       }));
       return;
     } else if (isNaN(formData.deliveryFees) || formData.deliveryFees < 0) {
       setFormErrors((prev) => ({
         ...prev,
-        deliveryFees: "Please enter a valid delivery fee",
+        deliveryFees: t("dashboard.provinces.forms.deliveryFees.errors.invalid"),
       }));
       return;
     } else {
       setFormErrors((prev) => ({ ...prev, deliveryFees: "" }));
     }
 
-    await addProvince(formData);
+    await addProvince({ name: formData.nameEn, deliveryFees: formData.deliveryFees }, "en");
+    await addProvince({ name: formData.nameAr, deliveryFees: formData.deliveryFees }, "ar");
 
     setFormData({
-      name: "",
+      nameEn: "",
+      nameAr: "",
       deliveryFees: 0,
     });
 
     setFormErrors({
-      name: "",
+      nameEn: "",
+      nameAr: "",
       deliveryFees: "",
     });
 
@@ -68,28 +85,38 @@ function AddProvince({ onClose }) {
   return (
     <div className="bg-white rounded-lg shadow-md p-6 space-y-4">
       <div className="flex items-center justify-between">
-        <h3 className="text-xl font-bold">Add Province</h3>
+        <h3 className="text-xl font-bold">{t("dashboard.provinces.addProvince")}</h3>
         <button onClick={onClose} className="p-2">
           <AiOutlineClose className="text-gray-500 hover:text-gray-700 text-xl" />
         </button>
       </div>
       <form onSubmit={handleSubmit} className="space-y-5">
-        {/* name */}
+        {/* nameEn */}
         <FormField
-          label={"Province Name"}
+          label={t("dashboard.provinces.forms.nameEn.label")}
           type={"text"}
-          name={"name"}
-          placeholder={"New province"}
-          value={formData.name}
+          name={"nameEn"}
+          placeholder={t("dashboard.provinces.forms.nameEn.placeholder")}
+          value={formData.nameEn}
           onChange={handleChange}
-          error={formErrors.name}
+          error={formErrors.nameEn}
+        />
+        {/* nameAr */}
+        <FormField
+          label={t("dashboard.provinces.forms.nameAr.label")}
+          type={"text"}
+          name={"nameAr"}
+          placeholder={t("dashboard.provinces.forms.nameAr.placeholder")}
+          value={formData.nameAr}
+          onChange={handleChange}
+          error={formErrors.nameAr}
         />
         {/* delivery fees */}
         <FormField
-          label={"Delivery Fees (Egp)"}
+          label={t("dashboard.provinces.forms.deliveryFees.label")}
           type={"number"}
           name={"deliveryFees"}
-          placeholder={"Delivery fees"}
+          placeholder={t("dashboard.provinces.forms.deliveryFees.placeholder")}
           value={formData.deliveryFees}
           onChange={handleChange}
           error={formErrors.deliveryFees}
@@ -101,7 +128,7 @@ function AddProvince({ onClose }) {
             disabled={loading}
             className="bg-primary text-white py-2 rounded-md hover:bg-primary/80 hoverEffect"
           >
-            {loading ? "Adding..." : "Add Province"}
+            {loading ? t("dashboard.provinces.addProvinceLoading") : t("dashboard.provinces.addProvince")}
           </button>
           {/* cancel btn */}
           <button
@@ -110,7 +137,7 @@ function AddProvince({ onClose }) {
             className="bg-red-500 text-white py-2 rounded-md hover:bg-red-400 hoverEffect"
             onClick={onClose}
           >
-            Cancel
+            {t("dashboard.provinces.cancel")}
           </button>
         </div>
       </form>

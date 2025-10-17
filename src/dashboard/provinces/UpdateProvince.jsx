@@ -1,14 +1,15 @@
 import { useState } from "react";
 import { AiOutlineClose } from "react-icons/ai";
-import { FaArrowRight } from "react-icons/fa";
 import { useAdmin } from "../../context/AdminContext";
 import FormField from "./../../components/formField/FormField";
+import { useTranslation } from "react-i18next";
 
 function UpdateProvince({ onClose, province }) {
   const { updateProvince, loading } = useAdmin();
+  const { t } = useTranslation();
 
   const [formData, setFormData] = useState({
-    name: province.name || "",
+    name: province.translations[0].name || "",
     deliveryFees: province.deliveryFees || 0,
   });
 
@@ -16,6 +17,8 @@ function UpdateProvince({ onClose, province }) {
     name: "",
     deliveryFees: "",
   });
+
+  console.log(province);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -28,7 +31,7 @@ function UpdateProvince({ onClose, province }) {
     if (!formData.name) {
       setFormErrors((prev) => ({
         ...prev,
-        name: "Please enter province name",
+        name: t("dashboard.provinces.forms.name.errors.required"),
       }));
       return;
     } else {
@@ -38,13 +41,13 @@ function UpdateProvince({ onClose, province }) {
     if (!formData.deliveryFees) {
       setFormErrors((prev) => ({
         ...prev,
-        deliveryFees: "Please enter delivery fee",
+        deliveryFees: t("dashboard.provinces.forms.deliveryFees.errors.required"),
       }));
       return;
     } else if (isNaN(formData.deliveryFees) || formData.deliveryFees < 0) {
       setFormErrors((prev) => ({
         ...prev,
-        deliveryFees: "Please enter a valid delivery fee",
+        deliveryFees: t("dashboard.provinces.forms.deliveryFees.errors.invalid"),
       }));
       return;
     } else {
@@ -69,7 +72,7 @@ function UpdateProvince({ onClose, province }) {
   return (
     <div className="bg-white rounded-lg shadow-md p-6 space-y-4">
       <div className="flex items-center justify-between">
-        <h3 className="text-xl font-bold">Update Province</h3>
+        <h3 className="text-xl font-bold">{t("dashboard.provinces.updateProvince")}</h3>
         <button onClick={onClose} className="p-2">
           <AiOutlineClose className="text-gray-500 hover:text-gray-700 text-xl" />
         </button>
@@ -77,20 +80,20 @@ function UpdateProvince({ onClose, province }) {
       <form onSubmit={handleSubmit} className="space-y-5">
         {/* name */}
         <FormField
-          label={"Province Name"}
+          label={t("dashboard.provinces.forms.name.label")}
           type={"text"}
           name={"name"}
-          placeholder={"New province"}
+          placeholder={t("dashboard.provinces.forms.name.placeholder")}
           value={formData.name}
           onChange={handleChange}
           error={formErrors.name}
         />
         {/* delivery fees */}
         <FormField
-          label={"Delivery Fees (Egp)"}
+          label={t("dashboard.provinces.forms.deliveryFees.label")}
           type={"number"}
           name={"deliveryFees"}
-          placeholder={"Delivery fees"}
+          placeholder={t("dashboard.provinces.forms.deliveryFees.placeholder")}
           value={formData.deliveryFees}
           onChange={handleChange}
           error={formErrors.deliveryFees}
@@ -102,7 +105,7 @@ function UpdateProvince({ onClose, province }) {
             disabled={loading}
             className="bg-primary text-white py-2 rounded-md hover:bg-primary/80 hoverEffect"
           >
-            {loading ? "Updating..." : "Update Province"}
+            {loading ? t("dashboard.provinces.updateProvinceLoading") : t("dashboard.provinces.updateProvince")}
           </button>
           {/* cancel btn */}
           <button
@@ -111,7 +114,7 @@ function UpdateProvince({ onClose, province }) {
             className="bg-red-500 text-white py-2 rounded-md hover:bg-red-400 hoverEffect"
             onClick={onClose}
           >
-            Cancel
+            {t("dashboard.provinces.cancel")}
           </button>
         </div>
       </form>

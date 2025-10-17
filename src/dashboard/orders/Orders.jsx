@@ -20,7 +20,8 @@ function Orders() {
       const filtered = orders.filter(
         (order) =>
           (order.userFirstName + " " + order.userLastName).toLowerCase().includes(value) ||
-          order.id.toString().includes(value)
+          order.id.toString().includes(value) ||
+          `Order - ${order.userFirstName + " " + order.userLastName} - ${order.city}`.toLowerCase().includes(value)
       );
       setFilteredOrders(filtered);
     }

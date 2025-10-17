@@ -120,7 +120,7 @@
       "coupons": "الكوبونات",
       "orders": "الطلبات",
       "provinces": "المحافظات",
-      "settings": "الإعدادات"
+      "ads": "الإعلانات"
     },
     "products": {
       "addProduct": "إضافة منتج",
@@ -327,6 +327,109 @@
           "placeholder": "اختر صورة",
           "errors": {
             "required": "الرجاء اختيار صورة"
+          }
+        }
+      }
+    },
+    "coupons": {
+      "addCoupon": "إضافة كوبون",
+      "updateCoupon": "تحديث الكوبون",
+      "createCoupon": "إنشاء كوبون",
+      "addCouponLoading": "جارٍ إضافة الكوبون...",
+      "updateCouponLoading": "جارٍ تحديث الكوبون...",
+      "createCouponLoading": "جارٍ إنشاء الكوبون...",
+      "cancel": "إلغاء",
+      "update": "تحديث",
+      "delete": "حذف",
+      "apply": "تطبيق",
+      "deleteLoading": "جارٍ حذف...",
+      "deleteMessage": "هل أنت متأكد أنك تريد حذف هذا الكوبون؟",
+      "applyMessage": "هل أنت متأكد أنك تريد تطبيق هذا الكوبون؟",
+      "noCoupons": "لا توجد كوبونات متاحة.",
+      "noCouponsDescription": "يمكنك الضغط على زر إضافة كوبون لإضافة كوبونات جديدة.",
+      "searchCoupons": "البحث عن كوبونات...",
+      "forms": {
+        "code": {
+          "label": "كود الكوبون",
+          "placeholder": "مثال: SUMMER20",
+          "errors": {
+            "required": "الرجاء إدخال كود الكوبون"
+          }
+        },
+        "discount": {
+          "label": "خصم الكوبون (%)",
+          "placeholder": "20",
+          "errors": {
+            "required": "الرجاء إدخال خصم الكوبون",
+            "invalid": "الرجاء إدخال خصم صالح"
+          }
+        },
+        "validFrom": {
+          "label": "صالح من",
+          "placeholder": "اختر تاريخ البدء",
+          "errors": {
+            "required": "الرجاء اختيار تاريخ البدء"
+          }
+        },
+        "validTo": {
+          "label": "صالح إلى",
+          "placeholder": "اختر تاريخ الانتهاء",
+          "errors": {
+            "required": "الرجاء اختيار تاريخ الانتهاء"
+          }
+        },
+        "usedCount": {
+          "label": "عدد مرات الاستخدام",
+          "placeholder": "50",
+          "errors": {
+            "required": "الرجاء إدخال عدد مرات الاستخدام",
+            "invalid": "الرجاء إدخال عدد صالح"
+          }
+        }
+      }
+    },
+    "provinces": {
+      "addProvince": "إضافة محافظة",
+      "updateProvince": "تحديث المحافظة",
+      "addProvinceLoading": "جارٍ إضافة المحافظة...",
+      "updateProvinceLoading": "جارٍ تحديث المحافظة...",
+      "cancel": "إلغاء",
+      "update": "تحديث",
+      "delete": "حذف",
+      "deleteLoading": "جارٍ حذف...",
+      "deleteMessage": "هل أنت متأكد أنك تريد حذف هذه المحافظة؟",
+      "noProvinces": "لا توجد محافظات متاحة.",
+      "noProvincesDescription": "يمكنك الضغط على زر إضافة محافظة لإضافة محافظات جديدة.",
+      "searchProvinces": "البحث عن محافظات...",
+      "forms": {
+        "nameEn": {
+          "label": "اسم المحافظة (إنجليزي)",
+          "placeholder": "Cairo",
+          "errors": {
+            "required": "الرجاء إدخال اسم المحافظة باللغة الإنجليزية"
+          }
+        },
+        "nameAr": {
+          "label": "اسم المحافظة (عربي)",
+          "placeholder": "القاهرة",
+          "errors": {
+            "required": "الرجاء إدخال اسم المحافظة باللغة العربية"
+          }
+        },
+        "name": {
+          "label": "اسم المحافظة",
+          "placeholder": "محافظة جديدة",
+          "errors": {
+            "required": "الرجاء إدخال اسم المحافظة"
+          }
+        },
+        "deliveryFees": {
+          "label": "رسوم التوصيل (جنيه)",
+          "placeholder": "50",
+          "currency": "جنيه",
+          "errors": {
+            "required": "الرجاء إدخال رسوم التوصيل",
+            "invalid": "الرجاء إدخال رسوم توصيل صالحة"
           }
         }
       }

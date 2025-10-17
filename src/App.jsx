@@ -5,6 +5,7 @@ import WhatsAppButton from "./components/whatsAppButton/WhatsAppButton";
 import { useTranslation } from "react-i18next";
 import { useEffect } from "react";
 import { Bounce, ToastContainer } from "react-toastify";
+import AdPopup from "./components/ad/AdPopup";
 
 function App() {
   const { i18n } = useTranslation();
@@ -25,6 +26,7 @@ function App() {
       </div>
       <Footer />
       <WhatsAppButton />
+      {/* <AdPopup /> */}
       <ToastContainer
         position={`${i18n.language === "ar" ? "top-left" : "top-right"}`}
         autoClose={5000}

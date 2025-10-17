@@ -1,12 +1,12 @@
 import { AiOutlineClose } from "react-icons/ai";
 import { useAdmin } from "../../context/AdminContext";
+import { useTranslation } from "react-i18next";
 
 function DeleteProvince({ onClose, provinceId }) {
   const { deleteProvince, loading } = useAdmin();
+  const { t } = useTranslation();
 
   const handleDelete = async (provinceId) => {
-    console.log(provinceId);
-
     await deleteProvince(provinceId);
 
     onClose();
@@ -15,17 +15,17 @@ function DeleteProvince({ onClose, provinceId }) {
   return (
     <div className="relative bg-white pt-20 pb-10 px-6 rounded-md shadow-lg w-96 max-w-full">
       <div className="flex flex-col gap-12">
-        <h2 className="text-lg font-semibold text-center">Are you sure you want to delete this province?</h2>
+        <h2 className="text-lg font-semibold text-center">{t("dashboard.provinces.deleteMessage")}</h2>
         <div className="grid grid-cols-2 gap-4">
           <button
             onClick={() => handleDelete(provinceId)}
             disabled={loading}
             className="bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700 mr-4"
           >
-            Delete
+            {t("dashboard.provinces.delete")}
           </button>
           <button onClick={onClose} disabled={loading} className="bg-gray-300 px-4 py-2 rounded-md hover:bg-gray-400">
-            Cancel
+            {t("dashboard.provinces.cancel")}
           </button>
         </div>
       </div>

@@ -1,4 +1,4 @@
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import Logo from "../logo/Logo";
 import { FaCartShopping } from "react-icons/fa6";
 import { useState } from "react";
@@ -8,9 +8,12 @@ import { AiOutlineMenu } from "react-icons/ai";
 import { FaEnvelope, FaHome, FaInfoCircle } from "react-icons/fa";
 import LanguageToggler from "../languageToggler/LanguageToggler";
 import { useTranslation } from "react-i18next";
+import { useCart } from "../../context/CartContext";
 
 function Navbar() {
+  const { cartCount } = useCart();
   const { pathname } = useLocation();
+  const navigate = useNavigate();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const { t } = useTranslation();
 
@@ -59,13 +62,13 @@ function Navbar() {
         </div>
         <div className="flex items-center gap-0">
           <LanguageToggler />
-          <button className="p-2 md:px-3 hover:text-primary hoverEffect relative">
+          <button className="p-2 md:px-3 hover:text-primary hoverEffect relative" onClick={() => navigate("/cart")}>
             <FaCartShopping className="text-2xl" />
             <span
               className="absolute top-0 right-0 bg-primary text-white text-xs 
               rounded-full w-4 h-4 flex items-center justify-center"
             >
-              0
+              {cartCount}
             </span>
           </button>
         </div>

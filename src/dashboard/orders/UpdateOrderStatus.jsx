@@ -49,6 +49,7 @@ function UpdateOrderStatus({ onClose, order }) {
             <option value="">Select Order Status</option>
             <option value="pending">Pending</option>
             <option value="shipped">Shipped</option>
+            <option value="delivered">Delivered</option>
           </select>
           {orderStatusError && <p className="text-red-500 text-sm mt-1">{orderStatusError}</p>}
         </div>

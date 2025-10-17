@@ -35,6 +35,8 @@ function UpdateProduct({ onClose, product }) {
     rank: "",
   });
 
+  console.log(product);
+
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };

@@ -8,6 +8,7 @@ import "./utils/i18n.js";
 import { AuthProvider } from "./context/AuthContext.jsx";
 import { ContactProvider } from "./context/ContactContext.jsx";
 import { AdminProvider } from "./context/AdminContext.jsx";
+import { CartProvider } from "./context/CartContext.jsx";
 
 axios.defaults.baseURL = import.meta.env.VITE_API_BASE_URL;
 axios.defaults.headers.post["Content-Type"] = "application/json";
@@ -26,13 +27,15 @@ axios.interceptors.response.use(
 );
 
 createRoot(document.getElementById("root")).render(
-  <AdminProvider>
-    <ContactProvider>
-      <AuthProvider>
-        <RouterProvider router={router}>
-          <App />
-        </RouterProvider>
-      </AuthProvider>
-    </ContactProvider>
-  </AdminProvider>
+  <CartProvider>
+    <AdminProvider>
+      <ContactProvider>
+        <AuthProvider>
+          <RouterProvider router={router}>
+            <App />
+          </RouterProvider>
+        </AuthProvider>
+      </ContactProvider>
+    </AdminProvider>
+  </CartProvider>
 );
